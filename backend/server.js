@@ -5,6 +5,9 @@ const User = require("./models/User");
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
 const roleMiddleware = require('./middleware/roleMiddleware');
+const problemRoutes = require('./routes/problemRoutes');
+const testcaseRoutes = require('./routes/testCaseRoutes');
+const submissionRoutes = require('./routes/submissionRoutes');
 
 dotenv.config();//loads the .env file
 DBConnection();//runs the function
@@ -22,15 +25,18 @@ app.listen(process.env.PORT, () => {//.listen() is a method that starts the serv
 });//it is a callback function
 
 app.use('/api/auth',authRoutes)//actual end point becomes /api/auth/register and api/auth/login ie all the routed defined in authRoutes.js will be prefiexed with this automatically// is to make our routes organized, grouped, and meaningful.
+app.use('/api/problem', problemRoutes);
+app.use('/api/testcase', testcaseRoutes);
+app.use('/api/submission',submissionRoutes);
 
 app.get('/test-protected',authMiddleware,(req,res)=>{
     res.send(`Hello ${req.user.firstname}, you're logged in!`);
-});
+});//this was just to test test middleware
 
 app.get('/admin-only',authMiddleware,roleMiddleware('admin'), (req, res) => {//authMiddleware must come first, because it checks the token and fills user info into req.user.
 //Then roleMiddleware uses that info to check the role.
    res.send(`Hello Admin ${req.user.firstname}`);
-});
+});//this was just to test middleware
 
 
 
