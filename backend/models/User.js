@@ -29,7 +29,7 @@ password:{
     },
 });
 
-module.exports = mongoose.model("user", userSchema);//create a collection (table) in MongoDB called users (auto-lowercase and plural), and define its structure using userSchema
+module.exports = mongoose.model("User", userSchema);//create a collection (table) in MongoDB called users (auto-lowercase and plural), and define its structure using userSchema
 
 
 
