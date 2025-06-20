@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     try {
-        const { firstname, lastname, email, password } = req.body;
+        const { firstname, lastname, email, password, role } = req.body;
         if (!(firstname && lastname && email && password)) {
             return res.status(400).send("Please enter all information")
         }
@@ -25,6 +25,7 @@ const registerUser = async (req, res) => {
             lastname,
             email,
             password: hashedPassword,
+            role,
         });
 
         return res.status(201).send("User registered successfully");
@@ -56,17 +57,25 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(400).send("Invslid email or password");
         }
-        const token = jwt.sign({ id: user._id, email }, process.env.SECRET_KEY,
+        const token = jwt.sign({//You fetch these details from the DB after checking that email & password match.You don’t have to look up the DB every time for these basic details
+            //You can later check the role, or see which user is making a request
+            id: user._id,
+            firstname: user.firstname,
+            email: user.email,
+            role: user.role
+        }, process.env.SECRET_KEY,
             { expiresIn: "1d" }//expiresIn: '1d' means the token is valid for only 1 day – after that, the user has to log in again.
         );
         user.token = token;
         user.password = undefined;
-        res.status(200).send("Login successful");  
-    }
-    catch (error) {
-       console.log(error)
-       res.status(500).send("Error while logging in");
-    }
+        res.status(200).json({
+            message: "Login successful",
+            token: token
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("Error while logging in");
+    };
 };
 
 module.exports = { registerUser, loginUser };
