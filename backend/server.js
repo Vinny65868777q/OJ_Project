@@ -8,6 +8,8 @@ const roleMiddleware = require('./middleware/roleMiddleware');
 const problemRoutes = require('./routes/problemRoutes');
 const testcaseRoutes = require('./routes/testCaseRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
+const userRoutes = require('./routes/UserRoutes');
+const leaderboardRoutes = require('./routes/leaderboardRoutes');
 
 dotenv.config();//loads the .env file
 DBConnection();//runs the function
@@ -28,6 +30,8 @@ app.use('/api/auth',authRoutes)//actual end point becomes /api/auth/register and
 app.use('/api/problem', problemRoutes);
 app.use('/api/testcase', testcaseRoutes);
 app.use('/api/submission',submissionRoutes);
+app.use('/api/user',userRoutes);
+app.use('/api',leaderboardRoutes);
 
 app.get('/test-protected',authMiddleware,(req,res)=>{
     res.send(`Hello ${req.user.firstname}, you're logged in!`);
