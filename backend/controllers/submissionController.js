@@ -1,7 +1,7 @@
 const Submission = require('../models/Submission');
 
 
-const createSubmission = async (req, res) => {
+const createSubmission = async (req, res, next) => {
     try {
         const { problemId, code, language } = req.body;
         const userId = req.user.id  // From auth middleware
@@ -23,13 +23,12 @@ const createSubmission = async (req, res) => {
 
         res.status(201).send(submission);
     } catch (error) {
-        console.error("Error creating submission:", error);
-        res.status(500).send("Server error while creating submission");
+       next(error);
     }
 
 };
 //Returns all submissions by the logged-in user — basically their submission history or list.
-const getUserSubmission = async (req, res) => {
+const getUserSubmission = async (req, res, next) => {
     try {
 
         const userId = req.user.id;
@@ -40,9 +39,7 @@ const getUserSubmission = async (req, res) => {
         res.status(200).send(submission);
 
     } catch (error) {
-        console.error("Error fetching user submissions:", error);
-        res.status(500).send("Server error while fetching submissions");
-
+        next(error);
 
     }
 
@@ -50,7 +47,7 @@ const getUserSubmission = async (req, res) => {
 
 //Returns one specific submission by its unique ID — used when you want to see details of a particular submission (like code, verdict, timestamps).
 
-const getSubmissinByID = async (req, res) => {
+const getSubmissinByID = async (req, res, next) => {
     try {
         const { id } = req.params;
         const submission = await Submission.findById(id)
@@ -63,11 +60,8 @@ const getSubmissinByID = async (req, res) => {
         res.status(200).send(submission);
 
     } catch {
-        console.error("Error fetching submission:", error);
-        res.status(500).send( "Server error while fetching submission" );
-
+        next(error);
     }
-
 
 };
 

@@ -1,6 +1,6 @@
 const TestCase = require('../models/TestCase');
 
-const createTestCase = async (req, res) => {
+const createTestCase = async (req, res,next) => {
 
     try {
         const { problemId, input, expectedOutput, isSample } = req.body;
@@ -19,12 +19,11 @@ const createTestCase = async (req, res) => {
 
         res.status(201).send(newTestCase);
     } catch (error) {
-        console.error("Error creating test case:", error);
-        res.status(500).send("Server error while creating test case");
+        next(error);
     }
 };
 
-const getTestCaseByProblem = async (req, res) => {
+const getTestCaseByProblem = async (req, res, next) => {
     try {
         const { problemId } = req.params;
         const testcase = await TestCase.find({ problemId });
@@ -37,14 +36,13 @@ const getTestCaseByProblem = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Error fetching test cases:", error);
-        res.status(500).send("Server error while fetching test cases");
+        next(error);
 
     }
 
 };
 
-const updateTestCase = async (req, res) => {
+const updateTestCase = async (req, res, next) => {
     try {
         const { id } = req.params;//this id comes from the URL itself, not from middleware.
         const updateData = req.body;//This line is taking the data you send in the body of the request and storing it in the variable updateData.
@@ -61,13 +59,11 @@ const updateTestCase = async (req, res) => {
         res.status(200).send(updatedTestCase);
     }
     catch (error) {
-        console.error("Error updating test case:", error);
-        res.status(500).send("Server error while updating test case");
-
+        next(error);
     }
 };
 
-const deleteTestCase = async (req, res) => {
+const deleteTestCase = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -79,8 +75,7 @@ const deleteTestCase = async (req, res) => {
 
         res.status(200).send('Test Case Succesfully deleted');
     } catch (error) {
-        console.error("Error deleting test case:", error);
-        res.status(500).send("Server error while deleting test case" );
+        next(error);
     }
 
 };

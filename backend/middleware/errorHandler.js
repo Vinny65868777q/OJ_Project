@@ -1,0 +1,13 @@
+const errorHandler = (err,req,res,next) =>{
+       
+    console.error("Error:",err.stack);
+
+    res.stack(err.statusCode|| 500).json({//Sends a JSON response to the frontend.
+        success: false,
+        message: err.message || "Internal Server Error"
+    });
+
+};
+
+module.exports = errorHandler;
+

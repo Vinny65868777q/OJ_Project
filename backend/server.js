@@ -10,6 +10,7 @@ const testcaseRoutes = require('./routes/testCaseRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const leaderboardRoutes = require('./routes/leaderboardRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();//loads the .env file
 DBConnection();//runs the function
@@ -32,6 +33,7 @@ app.use('/api/testcase', testcaseRoutes);
 app.use('/api/submission',submissionRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api',leaderboardRoutes);
+app.use(errorHandler);
 
 app.get('/test-protected',authMiddleware,(req,res)=>{
     res.send(`Hello ${req.user.firstname}, you're logged in!`);

@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 
 
-const getLeaderboard = async (req, res) => {
+const getLeaderboard = async (req, res,next) => {
 
     try {
         const leaderboardData = await Submission.aggregate([
@@ -36,8 +36,7 @@ const getLeaderboard = async (req, res) => {
         res.status(200).send(leaderboardData);
 
     } catch (error) {
-        console.error('Error fetching leaderboard:', error);
-        res.status(500).send('Server error while fetching leaderboard');
+        next(error);
     }
 
 };

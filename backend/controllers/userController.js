@@ -1,24 +1,26 @@
 const User = require('../models/User');
+const { body, validationResult } = require('express-validator');
 
 
-const getUserProfile = async (req, res) => {
+const getUserProfile = async (req, res, next) => {
     try {
 
         const userId = req.user.id;//// from auth middleware
-        const user = await User.findById( userId ).select('-password');// exclude password
+        const user = await User.findById(userId).select('-password');// exclude password
         if (!user) {
             return res.status(404).send('User Not Found');
         }
         res.status(200).send(user);
 
     } catch (error) {
-        console.error("Error fetching user profile:", error);
-        res.status(500).send("Server error");
+        next(error);
     }
 
 };
 
-const updateUserProfile = async (req, res) => {
+
+
+const updateUserProfile = async (req, res, next) => {
     try {
         const userId = req.user.id;
         const { firstname, lastname, email, password } = req.body;
@@ -41,9 +43,8 @@ const updateUserProfile = async (req, res) => {
 
         res.status(200).send('Profile updated successfully');
     } catch (error) {
-        console.error("Error updating profile:", error);
-        res.status(500).send("Server error");
+        next(error);
     }
 };
 
-module.exports = { getUserProfile, updateUserProfile };
+module.exports = { getUserProfile, updateUserProfile};
