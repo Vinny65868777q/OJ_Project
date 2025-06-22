@@ -19,8 +19,7 @@ const createProblem = async (req, res) => {
         res.status(201).send(newProblem);
 
     } catch (error) {
-        res.status(500).send('Error creating Problem');
-        console.error("Create problem error:", error);
+        next(error);
     }
 };
 
@@ -30,8 +29,7 @@ const getAllProblem = async (req, res) => {
         const problems = await Problems.find({});
         res.status(200).send(problems);
     } catch (error) {
-        console.log('Error fetching problem', error);
-        res.status(500).send('Server error while fetching problems');
+        next(error);
     }
 };
 //When user clicks on a problem in the list, we show full details.
@@ -42,13 +40,12 @@ const getProblemById = async (req, res) => {
         if (!problem) return res.status(404).send('Problem not Found');
         res.status(200).send(problem)
     } catch (error) {
-        console.log('Error fetching problem', error);
-        res.status(500).send('Server error while fetching problem');
+        next(error);
     }
 
 };
 //update controller API
-const updateProblem = async (req, res) => {
+const updateProblem = async (req, res, next) => {
     try {
         const { id } = req.params;
         const updateData = req.body;
@@ -63,12 +60,11 @@ const updateProblem = async (req, res) => {
         }
         res.status(200).send(upadatedProblem);
     } catch (error) {
-        console.error("Error updating problem:", error);
-        res.status(500).send("Server error while updating problem");
+        next(error);
     }
 };
 
-const deleteProblem = async (req, res) => {
+const deleteProblem = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -79,11 +75,10 @@ const deleteProblem = async (req, res) => {
         res.status(200).send("Problem deleted successfully");
 
     } catch (error) {
-      console.log("Error deleting problem:", error);
-      res.status(500).send('Server error while deleting problem');
+        next(error);
     }
 
 };
 
-module.exports = { createProblem, getAllProblem, getProblemById, updateProblem,deleteProblem};
+module.exports = { createProblem, getAllProblem, getProblemById, updateProblem, deleteProblem };
 
