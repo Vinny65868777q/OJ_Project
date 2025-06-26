@@ -4,7 +4,7 @@ const Middleware = (req, res, next) => {
     const token = req.header('Authorization');
 
     if (!token) {
-        return res.status(401).send("Access Denied: No Token provided");
+        return res.status(401).json({msg:"Access Denied: No Token provided"});
     }
 
     try {
@@ -13,7 +13,7 @@ const Middleware = (req, res, next) => {
         next(); // move to next middleware/route
 
     } catch (error) {
-        return res.status(400).send('Invalid Token');
+        return res.status(400).json({msg:'Invalid Token'});
     }
 
 };

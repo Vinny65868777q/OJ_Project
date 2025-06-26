@@ -1,0 +1,131 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    height: 100vh;
+    overflow: hidden;
+    /*Hide anything that goes outside the boundaries of the element.*/
+}
+
+.background-wrapper {
+    height: 100vh;
+    background: url('/assets/background3.jpg') no-repeat center center;
+    background-size: cover;
+    /*Scales the background image so that it completely covers the element — no empty space, even if some parts are cropped.*/
+    display: flex;
+    align-items: center;
+    /* Vertically centers items */
+    justify-content: center;
+    /* Horizontally centers items */
+}
+
+/* White card floating above background */
+.register-card {
+    width: 70%;
+    max-width: 1000px;
+    height: 550px;
+    display: flex;
+    border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    background: white;
+}
+
+/* Left Side */
+.left-panel {
+    position: relative;
+    flex: 1;/*In a flex container, it tells the element to grow and fill available space equally.*/
+    background: url('/assets/background3.jpg') no-repeat center center;
+
+    background-size: cover;
+    background-color: #000;
+    overflow: hidden;
+}
+
+/*We want to add a dark transparent layer (overlay) on top of the .left-panel background image.*/
+.left-panel::before {
+    content: "";
+    position: absolute;
+    /*Stretch the layer from corner to corner" — full cover.*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 4, 4, 0.5);
+    /* semi-transparent dark overlay */
+    z-index: 1;/*defines this layer on top This puts the dark layer above the image but below the text.*/
+}
+
+
+/* Right Side */
+.right-panel {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 350px;
+    
+}
+
+
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form .error-message {
+    color: #d8000c;
+    /* softer red tone */
+    background-color: #ffd2d2;
+    /* light red background */
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-left: 4px solid #d8000c;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.register-title {
+  font-size: 30px;             /* ⬅️ increase or decrease as needed */
+  font-weight: 600;            /* medium-bold */
+  font-family: 'Poppins', sans-serif;  /* or any font you like */
+  margin-bottom: 30px;
+  color: #120909;
+}
+
+
+form button:hover {
+    background-color: #008a8a;
+}
+
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 114, 255, 0.3);
+}
+
+form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
+}

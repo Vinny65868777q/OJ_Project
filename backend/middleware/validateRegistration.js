@@ -18,7 +18,7 @@ const validateRegistration = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).send(errors.array());
+             return res.status(400).json(errors.array());
         }
         next();
     }
