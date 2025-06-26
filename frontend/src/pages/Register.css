@@ -3,13 +3,13 @@ html {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    
     height: 100vh;
     overflow: hidden;
     /*Hide anything that goes outside the boundaries of the element.*/
 }
 
-.background-wrapper {
+.register-background-wrapper {
     height: 100vh;
     background: url('/assets/background3.jpg') no-repeat center center;
     background-size: cover;
@@ -34,7 +34,7 @@ html {
 }
 
 /* Left Side */
-.left-panel {
+.register-left-panel {
     position: relative;
     flex: 1;/*In a flex container, it tells the element to grow and fill available space equally.*/
     background: url('/assets/background3.jpg') no-repeat center center;
@@ -45,7 +45,7 @@ html {
 }
 
 /*We want to add a dark transparent layer (overlay) on top of the .left-panel background image.*/
-.left-panel::before {
+.register-left-panel::before {
     content: "";
     position: absolute;
     /*Stretch the layer from corner to corner" — full cover.*/
@@ -60,7 +60,7 @@ html {
 
 
 /* Right Side */
-.right-panel {
+.register-right-panel {
     flex: 1;
     padding: 15px;
     display: flex;
@@ -68,14 +68,14 @@ html {
     justify-content: center;
 }
 
-.form-card {
+.register-form-card {
     width: 100%;
     max-width: 350px;
     
 }
 
 
-form input {
+.register-input {
     width: 100%;
     padding: 12px;
     margin-bottom: 16px;

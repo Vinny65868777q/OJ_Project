@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 
 const Middleware = (req, res, next) => {
-    const token = req.header('Authorization');
+    const token = req.cookies.token; // Get token from cookie (not header)
 
     if (!token) {
-        return res.status(401).json({msg:"Access Denied: No Token provided"});
+        error.statusCode = 401;
+        error.message = 'Invalid or expired token';
+        return next(error);
     }
 
     try {
@@ -13,7 +15,10 @@ const Middleware = (req, res, next) => {
         next(); // move to next middleware/route
 
     } catch (error) {
-        return res.status(400).json({msg:'Invalid Token'});
+        error.statusCode = 401;
+        error.message = "Invalid or expired token";
+        return next(error); //Forward custom error to error handler 
+
     }
 
 };

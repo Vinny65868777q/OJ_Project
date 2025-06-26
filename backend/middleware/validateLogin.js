@@ -6,13 +6,13 @@ const validateLogin = [
         .isEmail().withMessage('Email must be valid'),
 
     body('password')
-        .notEmpty().withMessage('Pawword required')
+        .notEmpty().withMessage('Password required')
         .isLength({ min: 6 }).withMessage('Password must at least 6 characters'),
 
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).send(errors.array())
+            return res.status(400).json(errors.array())
         }
         next();
 
