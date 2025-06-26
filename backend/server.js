@@ -12,6 +12,7 @@ const submissionRoutes = require('./routes/submissionRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const errorHandler = require('./middleware/errorHandler');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();//loads the .env file
 DBConnection();//runs the function
@@ -25,7 +26,7 @@ app.use(cors({
 
 app.use(express.json());//This tells the server to accept data in JSON format
 app.use(express.urlencoded({extended: true}));
-
+app.use(cookieParser());
 
 app.get('/',(req,res) => {
     res.send('API is running');

@@ -1,7 +1,9 @@
+
+import './Register.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Register.css';
+
 
 
 function Register() {
@@ -43,22 +45,22 @@ function Register() {
 
     return (
 
-        <div className="background-wrapper">
+        <div className="register-background-wrapper">
             <div className="register-card">
-                <div className="left-panel">
+                <div className="register-left-panel">
 
                 </div>
 
-                <div className="right-panel">
-                    <div className="form-card">
+                <div className="register-right-panel">
+                    <div className="register-form-card">
                         <h2 className="register-title">Register</h2>
-                        <form onSubmit={handleSubmit} noValidate >
-                            <input type="text" name="firstname" placeholder='First Name' value={formData.firstname} onChange={handleChange} required />
-                            <input type="text" name="lastname" placeholder='Last Name' value={formData.lastname} onChange={handleChange} required />
-                            <input type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} required />
-                            <input type="password" name="password" placeholder='Password' value={formData.password} onChange={handleChange} required />
+                        <form className='register-form'onSubmit={handleSubmit} noValidate >
+                            <input className="register-input" type="text" name="firstname" placeholder='First Name' value={formData.firstname} onChange={handleChange} required />
+                            <input className="register-input" type="text" name="lastname" placeholder='Last Name' value={formData.lastname} onChange={handleChange} required />
+                            <input className="register-input" type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} required />
+                            <input className="register-input" type="password" name="password" placeholder='Password' value={formData.password} onChange={handleChange} required />
 
-                            <button type="submit">Sign Up</button>
+                            <button className="button" type="submit">Sign Up</button>
                             {error && <p className="error-message">{error}</p>}{/*if error exists then show in red that msg else show nothing*/}
                         </form>
                         <p>Already have an account? <a href="/login">Login here</a></p>
