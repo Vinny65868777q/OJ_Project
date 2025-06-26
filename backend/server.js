@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const {DBConnection} = require('./database/db');// a shortcut to pull the DBConnection function out of that object.
 const User = require("./models/User");
@@ -16,8 +17,15 @@ dotenv.config();//loads the .env file
 DBConnection();//runs the function
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173', // Vite frontend origin
+  credentials: true
+}));
+
 app.use(express.json());//This tells the server to accept data in JSON format
 app.use(express.urlencoded({extended: true}));
+
 
 app.get('/',(req,res) => {
     res.send('API is running');

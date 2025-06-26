@@ -5,7 +5,7 @@ const roleMiddleware = (requiredRole) => {
         next();// user has correct role, continue
        }
        else{
-        return res.status(403).send('Forbidden: You do not have access')
+        return res.status(403).json({msg:'Forbidden: You do not have access'})
        }
     };
 };

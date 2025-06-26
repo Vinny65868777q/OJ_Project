@@ -9,13 +9,12 @@ const jwt = require('jsonwebtoken');
 const registerUser = async (req, res, next) => {
     try {
         const { firstname, lastname, email, password, role } = req.body;
-        if (!(firstname && lastname && email && password)) {
-            return res.status(400).send("Please enter all information")
-        }
 
         const existingUser = await User.findOne({ email })
         if (existingUser) {
-            return res.status(400).send("User already exist with the same email")
+            const error = new Error("User already exists with the same email");
+            error.statusCode = 400;
+            return next(error);
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,10 +24,10 @@ const registerUser = async (req, res, next) => {
             lastname,
             email,
             password: hashedPassword,
-            role,
+
         });
 
-        return res.status(201).send("User registered successfully");
+        return res.status(201).json({ msg: `Welcome ${newuser.firstname}! You are registered ` });
 
     } catch (error) {
         next(error);
@@ -48,13 +47,13 @@ const loginUser = async (req, res) => {
         //Check if the user exists
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).send("Invalid email or password");
+            return res.status(400).json({ msg: "Invalid email or password" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);//Takes the plain text password the user entered Hashes it internally Then checks if the hash matches user.password from the database
 
         if (!isMatch) {
-            return res.status(400).send("Invslid email or password");
+            return res.status(400).json({ msg: "Invalid email or password" });
         }
         const token = jwt.sign({//You fetch these details from the DB after checking that email & password match.You don’t have to look up the DB every time for these basic details
             //You can later check the role, or see which user is making a request
@@ -73,7 +72,7 @@ const loginUser = async (req, res) => {
         });
     } catch (error) {
         console.log(error)
-        res.status(500).send("Error while logging in");
+        res.status(500).json({ msg: "Error while logging in" });
     };
 };
 
