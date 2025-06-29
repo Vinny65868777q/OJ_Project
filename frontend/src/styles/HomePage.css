@@ -1,0 +1,11 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;   /* fills the whole screen */
+}
+
+.home-main {
+  flex: 0.53;             /* pushes footer down if content is short */
+  padding: 2rem;
+  text-align: center;
+}
