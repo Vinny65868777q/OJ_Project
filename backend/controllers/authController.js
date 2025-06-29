@@ -69,8 +69,9 @@ const loginUser = async (req, res, next) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // HTTPS only in prod
-            sameSite: "Strict", // Prevents CSRF - Cookie is only sent on your site, not when someone else tries to use your login link.
+            sameSite: process.env.NODE_ENV==='production' ? 'Strict' : 'Lax', // Prevents CSRF - Cookie is only sent on your site, not when someone else tries to use your login link.
             maxAge: 24 * 60 * 60 * 1000 // 1 day 24 hours × 60 min × 60 sec × 1000 ms
+           
         });
 
         res.status(200).json({

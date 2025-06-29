@@ -44,6 +44,8 @@ app.use('/api/user',userRoutes);
 app.use('/api',leaderboardRoutes);
 app.use(errorHandler);
 
+
+
 app.get('/test-protected',authMiddleware,(req,res)=>{
     res.send(`Hello ${req.user.firstname}, you're logged in!`);
 });//this was just to test test middleware

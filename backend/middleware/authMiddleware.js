@@ -4,9 +4,7 @@ const Middleware = (req, res, next) => {
     const token = req.cookies.token; // Get token from cookie (not header)
 
     if (!token) {
-        error.statusCode = 401;
-        error.message = 'Invalid or expired token';
-        return next(error);
+     return res.status(401).json({ message: "Unauthorized: No token provided" });
     }
 
     try {
@@ -14,10 +12,8 @@ const Middleware = (req, res, next) => {
         req.user = verified; // store user info in request
         next(); // move to next middleware/route
 
-    } catch (error) {
-        error.statusCode = 401;
-        error.message = "Invalid or expired token";
-        return next(error); //Forward custom error to error handler 
+    } catch (err) {
+        return res.status(402).json({ message: "Unauthorized: Invalid token" });
 
     }
 
