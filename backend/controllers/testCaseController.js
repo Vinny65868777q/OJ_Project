@@ -6,7 +6,7 @@ const createTestCase = async (req, res,next) => {
         const { problemId, input, expectedOutput, isSample } = req.body;
 
         if (!(problemId && input && expectedOutput)) {
-            return res.status(400).return('All required fields must be provided');
+            return res.status(400).send('All required fields must be provided');
         }
 
         const newTestCase = await TestCase.create({

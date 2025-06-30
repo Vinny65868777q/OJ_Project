@@ -19,7 +19,11 @@ function Login() {
             login();
             alert(res.data.message);
 
-            navigate('/dashboard');
+            if (res.data.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
 
         } catch (error) {
             console.error(error.response);

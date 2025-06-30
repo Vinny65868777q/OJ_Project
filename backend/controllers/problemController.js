@@ -1,6 +1,6 @@
 const Problems = require('../models/problems');
 
-const createProblem = async (req, res) => {
+const createProblem = async (req, res,next) => {
     try {
         const { title, description, inputFormat, outputFormat, difficulty } = req.body;
 
@@ -16,7 +16,8 @@ const createProblem = async (req, res) => {
             difficulty,
             createdBy: req.user.id //user info from token, added by middleware
         });
-        res.status(201).send(newProblem);
+        res.status(201).json({ message: 'Problem created', problemId: newProblem._id });
+
 
     } catch (error) {
         next(error);

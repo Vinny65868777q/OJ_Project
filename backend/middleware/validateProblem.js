@@ -22,7 +22,7 @@ const validateProblem = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(200).send(errors.array());
+            return res.status(400).send(errors.array());
         }
     
     next();
