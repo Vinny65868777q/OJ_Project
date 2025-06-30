@@ -2,7 +2,40 @@
 html, body, #root {
   height: 100%;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.admin-form-container {
+  padding: 2rem;
+  background: #fdfdfd;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
 
+.admin-form-container input,
+.admin-form-container textarea,
+.admin-form-container select {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.admin-form-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
+.admin-form-container button:hover {
+  background-color: #0056b3;
 }
 
 
