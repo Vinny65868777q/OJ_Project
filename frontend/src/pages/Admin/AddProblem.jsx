@@ -31,9 +31,16 @@ const [message, setMessage] = useState('');
       setTimeout(() => navigate(`/admin/problem/${problemId}/add-testcases`), 1500);
       console.log('Saved Problem ID:', problemId);
     } catch (err) {
-      console.error(err);
-      setMessage(err.response?.data?.message || 'Failed to create problem.');
-    }
+  const data = err.response?.data;
+  if (Array.isArray(data) && data.length) {
+    setMessage(data[0].msg);
+  } else if (data?.message) {
+    setMessage(data.message);
+  } else {
+    setMessage('Failed to create problem.');
+  }
+}
+
   };
 
 
@@ -42,7 +49,7 @@ const [message, setMessage] = useState('');
       <h2>Add a New Problem</h2>
       {message && <p className="message">{message}</p>}
       <div className="form-scroll-area"> {/* Scrollable wrapper */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
         <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
         <input type="text" name="inputFormat" placeholder="Input Format" value={formData.inputFormat} onChange={handleChange} required />

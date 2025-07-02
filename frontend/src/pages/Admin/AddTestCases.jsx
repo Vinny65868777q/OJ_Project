@@ -29,30 +29,55 @@ const AddTestCases = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const allCases = [...sampleTestCases.map(tc => ({ ...tc, isSample: true })), ...hiddenTestCases.map(tc => ({ ...tc, isSample: false }))];
-      for (const testCase of allCases) {
-        await axios.post('http://localhost:5000/api/testcase/create', {
-          ...testCase,
-          problemId: id,
-        }, { withCredentials: true });
-      }
-      setMessage('✅ All test cases saved!');
-      setTimeout(() => navigate('/admin'), 2000);
-    } catch (error) {
-      console.error(error);
-      setMessage('❌ Error saving test cases.');
-    }
-  };
+  e.preventDefault();
 
+  const allCases = [
+    ...sampleTestCases.map(tc => ({ ...tc, isSample: true })),
+    ...hiddenTestCases.map(tc => ({ ...tc, isSample: false }))
+  ];
+
+  const errors = [];
+
+  // Loop through each test case separately
+  for (let i = 0; i < allCases.length; i++) {
+    const testCase = allCases[i];
+    try {
+      await axios.post(
+        'http://localhost:5000/api/testcase/create',
+        { ...testCase, problemId },
+        { withCredentials: true }
+      );
+    } catch (err) {
+      // Normalize backend error response
+      const data = err.response?.data;
+      let msg;
+      if (Array.isArray(data) && data.length) {
+        msg = data[0].msg;
+      } else if (typeof data === 'string') {
+        msg = data;
+      } else if (data?.message) {
+        msg = data.message;
+      } else {
+        msg = err.message;
+      }
+      errors.push(`Test case ${i + 1}: ${msg}`);
+    }
+  }
+ if (errors.length > 0) {
+    // to Show only the first error 
+    setMessage(errors[0]);
+  } else {
+    setMessage('✅ All test cases saved!');
+    setTimeout(() => navigate('/admin'), 2000);
+  }
+};
   return (
     <div className="page-bg">
     <div className="testcase-form">
       <h2>Add Test Cases for Problem</h2>
       {message && <p className="msg">{message}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <h3>Sample Test Cases</h3>
         {sampleTestCases.map((tc, idx) => (
           <div key={idx} className="tc-block">
