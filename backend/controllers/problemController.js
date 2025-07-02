@@ -1,6 +1,6 @@
 const Problems = require('../models/problems');
 
-const createProblem = async (req, res,next) => {
+const createProblem = async (req, res, next) => {
     try {
         const { title, description, inputFormat, outputFormat, difficulty } = req.body;
 
@@ -16,7 +16,7 @@ const createProblem = async (req, res,next) => {
             difficulty,
             createdBy: req.user.id //user info from token, added by middleware
         });
-        res.status(201).json({ message: 'Problem created', problemId: newProblem._id });
+        res.status(200).json({ message: 'Problem created', problemId: newProblem._id });
 
 
     } catch (error) {
@@ -25,16 +25,19 @@ const createProblem = async (req, res,next) => {
 };
 
 //This API is used to fetch a list of all problems for the homepage/problem list screen
-const getAllProblem = async (req, res) => {
+const getAllProblem = async (req, res, next) => {
     try {
         const problems = await Problems.find({});
-        res.status(200).send(problems);
+        res.status(200).json(problems);
+        if (!problems.length) {
+            return res.status(404).json({ message: 'No problems found' });
+        }
     } catch (error) {
         next(error);
     }
 };
 //When user clicks on a problem in the list, we show full details.
-const getProblemById = async (req, res) => {
+const getProblemById = async (req, res, next) => {
     try {
         const { id } = req.params;
         const problem = await Problems.findById(id);

@@ -10,7 +10,7 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <aside className="sidebar">
        <div className="admin-logo">
-        <img img src="/assets/Logo.png" alt="JudgeX" />
+        <img src="/assets/Logo.png" alt="JudgeX" />
         </div>
         <button onClick={() => navigate('/admin/add-problem')}><i className="fas fa-plus"></i> Add Problem</button>
         <button onClick={() => navigate('/admin/manage-problems')}><i className="fas fa-tasks"></i> Manage Problems</button>
