@@ -1,0 +1,94 @@
+.add-problem-container {
+  max-width: 900px;
+  margin: auto auto;
+  background: linear-gradient(to bottom right, #e0ecff, #c7dbf7);
+  padding: 40px 50px;
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 6px solid #6d5dd3;
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.add-problem-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+.add-problem-container .message {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #880f0f;
+  font-size: 1.1rem;
+}
+
+.add-problem-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.add-problem-container input,
+.add-problem-container textarea,
+.add-problem-container select {
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9fafe;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-problem-container input:focus,
+.add-problem-container textarea:focus,
+.add-problem-container select:focus {
+  outline: none;
+  border-color: #5c6bc0;
+  box-shadow: 0 0 6px rgba(92, 107, 192, 0.3);
+}
+
+.add-problem-container textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.add-problem-container button {
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #5c6bc0;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-problem-container button:hover {
+  background-color: #3f51b5;
+  transform: translateY(-1px);
+}
+
+.form-scroll-area {
+  max-height: 70vh;          /* Adjust as needed */
+  overflow-y: auto;
+  padding-right: 8px;        /* So scrollbar doesn't hide text */
+}
+
+/* Optional: customize scrollbar (Chrome, Edge) */
+.form-scroll-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-scroll-area::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}

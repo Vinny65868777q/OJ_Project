@@ -8,6 +8,11 @@ import Leaderboard from './pages/Leaderboard';
 import HomePage from './pages/HomePage';
 import MainLayout from './layout/MainLayout';
 import PrivateRoute from './Routes/PrivateRoute';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import ProtectedAdminRoute from './Routes/ProtectedAdminRoute';
+import AddProblem from './pages/Admin/AddProblem';
+import AddTestCases from './pages/Admin/AddTestCases';
+import ProblemDetail from './components/ProblemDetail';
 
 function App() {
   return (
@@ -22,6 +27,10 @@ function App() {
           <Route path="submission" element={<PrivateRoute><Submissions /></PrivateRoute>} />
           <Route path="leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
         </Route>
+         <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+         <Route path="/admin/add-problem" element={<ProtectedAdminRoute><AddProblem /></ProtectedAdminRoute>} />
+          <Route path="/admin/problem/:problemId/add-testcases" element={<ProtectedAdminRoute><AddTestCases /></ProtectedAdminRoute>} />
+          <Route path="/problems/:id" element={<ProblemDetail/>}/>
       </Routes>
     </BrowserRouter>
   );

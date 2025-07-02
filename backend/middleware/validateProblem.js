@@ -7,7 +7,7 @@ const validateProblem = [
 
     body('difficulty')
         .notEmpty().withMessage('Difficulty is required')
-        .isIn(['Easy', 'Medium', 'Hard']).withMessage('Difficulty must be Easy, Medium, or Hard'),
+        .isIn(['easy', 'medium', 'difficult']).withMessage('Difficulty must be Easy, Medium, or Hard'),
 
     body('description')
         .notEmpty().withMessage('Description of the problem is required')
@@ -22,7 +22,7 @@ const validateProblem = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(200).send(errors.array());
+             return res.status(400).json(errors.array());
         }
     
     next();

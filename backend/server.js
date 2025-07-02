@@ -43,6 +43,8 @@ app.use('/api/submission',submissionRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api',leaderboardRoutes);
 app.use(errorHandler);
+app.use('/api/auth', require('./routes/auth'));
+
 
 
 

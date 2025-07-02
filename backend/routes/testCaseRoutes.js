@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express();
+const app = express.Router();
 const {createtestCase, createTestCase, getTestCaseByProblem,updateTestCase,deleteTestCase} = require('../controllers/testCaseController');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');

@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express();
+const app = express.Router();
 const { createProblem, getAllProblem, getProblemById, updateProblem, deleteProblem } = require('../controllers/problemController');
 const roleMiddleware = require('../middleware/roleMiddleware');
 const authMiddleware = require('../middleware/authMiddleware');

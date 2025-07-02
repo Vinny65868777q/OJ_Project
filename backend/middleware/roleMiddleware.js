@@ -1,4 +1,4 @@
-// Middleware to check user role (e.g., 'admin')
+// Middleware to check user role 
 const roleMiddleware = (requiredRole) => {
     return (req,res,next) => {
        if (req.user && req.user.role === requiredRole){//the user is logged in and their details were stored in the request and the role matches

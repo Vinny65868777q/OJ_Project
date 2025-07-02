@@ -1,12 +1,12 @@
 const TestCase = require('../models/TestCase');
 
 const createTestCase = async (req, res,next) => {
-
+console.log('🔥 createTestCase req.body:', req.body);
     try {
         const { problemId, input, expectedOutput, isSample } = req.body;
 
         if (!(problemId && input && expectedOutput)) {
-            return res.status(400).return('All required fields must be provided');
+            return res.status(400).json({ message: 'All required fields must be provided' });
         }
 
         const newTestCase = await TestCase.create({
@@ -17,7 +17,7 @@ const createTestCase = async (req, res,next) => {
             createdBy: req.user.id // admin ID from auth middleware
         });
 
-        res.status(201).send(newTestCase);
+        res.status(200).json({ message:'Test Cases created'})
     } catch (error) {
         next(error);
     }
