@@ -3,10 +3,10 @@ const Submission = require('../models/Submission');
 
 const createSubmission = async (req, res, next) => {
     try {
-        const { problemId, code, language } = req.body;
+        const { problemId, code, language,verdict,executionTime } = req.body;
         const userId = req.user.id  // From auth middleware
 
-        if (!(problemId && code && language)) {
+        if (!(problemId && code && language && verdict)) {
             return res.status(400).send("All fields are required");
         }
 
@@ -18,10 +18,11 @@ const createSubmission = async (req, res, next) => {
             problemId,
             code,
             language,
-            verdict: 'Compilation Error'
+            verdict,
+            executionTime
         });
 
-        res.status(201).send(submission);
+        res.status(201).json(submission);
     } catch (error) {
        next(error);
     }
@@ -36,7 +37,7 @@ const getUserSubmission = async (req, res, next) => {
             .populate('problemId', 'title difficulty')//replaces the problemId field (which is usually just an ObjectId) with the the title and difficulty fields.//Mongoose will also include the problem id
             .sort({ submittedAt: -1 });//the most recent submissions appear first.
 
-        res.status(200).send(submission);
+        res.status(200).json(submission);
 
     } catch (error) {
         next(error);
