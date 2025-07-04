@@ -1,5 +1,5 @@
 compiler/node_modules
 compiler/inputs
 compiler/codes
-compiler/outputscompiler/outputs/
-compiler/codes/
+compiler/outputs
+
