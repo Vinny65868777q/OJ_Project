@@ -1,0 +1,94 @@
+/* src/styles/Leaderboard.css */
+
+.leaderboard-container {
+  background-color: #16171a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.leaderboard-title {
+  font-size: 32px;
+  margin-bottom: 24px;
+  color: #efdfdf; /* theme accent */
+}
+
+.leaderboard-card {
+  width: 100%;
+  max-width: 900px;
+  background-color: #1c1f2b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table thead {
+  background-color: #222530;
+}
+
+.leaderboard-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: #d0d0d0;
+}
+
+.leaderboard-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.leaderboard-table tbody tr:nth-child(even) {
+  background-color: #1f2231;
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+  background-color: #242639;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #2d2f44;
+}
+
+.leaderboard-table td {
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #bbb;
+  border-bottom: 1px solid #333645;
+}
+
+/* Highlight first-place row */
+.leaderboard-table tbody tr.first-place {
+  background: linear-gradient(90deg, rgba(0,230,118,0.1), rgba(0,200,100,0.1));
+}
+
+.leaderboard-table tbody tr.first-place td {
+  color: #00e676;
+  font-weight: 600;
+}
+
+/* Rank cell styling */
+.leaderboard-table td:first-child {
+  font-weight: bold;
+  width: 60px;
+}
+
+
+.leaderboard-table td:nth-child(2) {
+  color: #8ecaff;
+}
+
+/* Accuracy cell */
+.leaderboard-table td:nth-child(5) {
+  color: #ffa07a;
+}

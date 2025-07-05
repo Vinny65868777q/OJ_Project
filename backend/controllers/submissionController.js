@@ -1,9 +1,10 @@
 const Submission = require('../models/Submission');
 
 
+
 const createSubmission = async (req, res, next) => {
     try {
-        const { problemId, code, language,verdict,executionTime } = req.body;
+        const { problemId, code, language, verdict, executionTime } = req.body;
         const userId = req.user.id  // From auth middleware
 
         if (!(problemId && code && language && verdict)) {
@@ -24,7 +25,7 @@ const createSubmission = async (req, res, next) => {
 
         res.status(201).json(submission);
     } catch (error) {
-       next(error);
+        next(error);
     }
 
 };
@@ -53,17 +54,21 @@ const getSubmissinByID = async (req, res, next) => {
         const { id } = req.params;
         const submission = await Submission.findById(id)
             .populate('problemId', 'title difficulty')
-            .populate('userId', 'firstname lastname');
+           
 
         if (!submission) {
             return res.status(404).send('Submission not Found');
         }
-        res.status(200).send(submission);
+  // Ensure only the user who made the submission can view it
+        if (submission.userId.toString() !== req.user.id) {
+            return res.status(403).send("Unauthorized");
+        }
+        res.status(200).json(submission);
 
-    } catch {
+    } catch (error) {
         next(error);
     }
 
 };
 
-module.exports = { createSubmission, getUserSubmission,getSubmissinByID };
+module.exports = { createSubmission, getUserSubmission, getSubmissinByID };

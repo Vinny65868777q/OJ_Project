@@ -13,6 +13,7 @@ import ProtectedAdminRoute from './Routes/ProtectedAdminRoute';
 import AddProblem from './pages/Admin/AddProblem';
 import AddTestCases from './pages/Admin/AddTestCases';
 import ProblemDetail from './components/ProblemDetail';
+import SubmissionDetail  from './pages/SubmissionDetail';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
          <Route path="/admin/add-problem" element={<ProtectedAdminRoute><AddProblem /></ProtectedAdminRoute>} />
           <Route path="/admin/problem/:problemId/add-testcases" element={<ProtectedAdminRoute><AddTestCases /></ProtectedAdminRoute>} />
           <Route path="/problems/:id" element={<ProblemDetail/>}/>
+          <Route path="/submission/:id"    element={<SubmissionDetail />} />
       </Routes>
     </BrowserRouter>
   );

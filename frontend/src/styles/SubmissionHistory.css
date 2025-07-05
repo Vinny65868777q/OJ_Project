@@ -1,0 +1,94 @@
+/* SubmissionHistory.css */
+
+.history-container {
+  background-color: #16171a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.history-title {
+  font-size: 32px;
+  margin-bottom: 24px;
+  color: #e9e7f2;
+}
+
+.history-table-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #1c1f2b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table thead {
+  background-color: #222530;
+}
+
+.history-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: #d0d0d0;
+}
+
+.history-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.history-table tbody tr:nth-child(even) {
+  background-color: #1f2231;
+}
+
+.history-table tbody tr:nth-child(odd) {
+  background-color: #242639;
+}
+
+.history-table tbody tr:hover {
+  background-color: #2d2f44;
+}
+
+.history-table td {
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #bbb;
+  border-bottom: 1px solid #333645;
+}
+
+/* colored side-bar per verdict */
+.history-table tbody tr.accepted td:first-child {
+  border-left: 4px solid #00e676;
+  padding-left: 16px;
+}
+.history-table tbody tr.failed td:first-child {
+  border-left: 4px solid #ff4d4f;
+  padding-left: 16px;
+}
+
+.prob-title a {
+  color: #8ecaff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.prob-title a:hover {
+  text-decoration: underline;
+}
+
+.loading, .no-data {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  margin-top: 60px;
+}

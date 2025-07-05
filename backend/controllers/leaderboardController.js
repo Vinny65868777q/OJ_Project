@@ -4,14 +4,33 @@ const User = require('../models/User');
 
 
 
-const getLeaderboard = async (req, res,next) => {
+const getLeaderboard = async (req, res, next) => {
 
     try {
         const leaderboardData = await Submission.aggregate([
-            { $match: { 'verdict': 'Accepted' } },//Only consider submissions where the verdict was "Accepted"
-            { $group: { _id: '$userId', solvedCount: { $sum: 1 } } },//Group the remaining submissions by userId//For each userId, count the number of times they appear and store in new field - solvedCount
+            {
+                $group: {
+                    _id: '$userId',
+                    solvedCount: {
+                        $sum: { $cond: [{ $eq: ['$verdict', 'Accepted'] }, 1, 0] }
+                    },
+                    submissionCount: { $sum: 1 }
+                }
+            },//Group the remaining submissions by userId//For each userId, count the number of times they appear and store in new field - solvedCount
+
+            {
+                $addFields: {
+                    accuracy: {
+                        $cond: [
+                            { $eq: ['$submissionCount', 0] },
+                            0,
+                            { $multiply: [{ $divide: ['$solvedCount', '$submissionCount'] }, 100] }
+                        ]
+                    }
+                }
+            },
             { $sort: { solvedCount: -1 } },
-            { $limit: 10 },//only top 10 users
+
             {
                 $lookup: {//this is like a JOIN operation
                     from: 'users',//for this we have imported User // which collection to join
@@ -22,13 +41,15 @@ const getLeaderboard = async (req, res,next) => {
                 }//MongoDB joins the matching user info into an array
             },
             { $unwind: '$user' },	//Flattens the array to a single object
+            { $match: { 'user.role': 'user' } },  // filter out admins
             {
                 $project: {//Choose what fields I want to keep or rename in the final output.
                     _id: 0, //Don’t include MongoDB's default _id field
                     userId: '$user._id',//Create a field called userId, and copy it from user._id
-                    firstname: '$user.firstname',
-                    lastname: '$user.lastname',
-                    solvedCount: 1
+                    username: { $concat: ['$user.firstname', ' ', '$user.lastname'] },
+                    solvedCount: 1,
+                    submissionCount: 1,
+                    accuracy: 1
                 }
             }
 

@@ -1,0 +1,49 @@
+/* src/styles/SubmissionDetail.css */
+.submission-detail {
+  background: #16171a;
+  color: #fff;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  
+}
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #8ecaff;
+  text-decoration: none;
+}
+.back-button:hover { text-decoration: underline; }
+
+.submission-detail h2 {
+  color: #e9e7f2;
+  margin-bottom: 20px;
+  margin-top: -20px;
+}
+
+.meta p {
+  margin: 6px 0;
+  font-size: 17px;
+}
+
+.code-block {
+  background: #1c1f2b;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  overflow-y: auto;
+  max-height: 270px;
+  border-left: 4px solid #00ff88; 
+  
+}
+
+.code-block pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
