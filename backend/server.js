@@ -44,7 +44,7 @@ app.use('/api/user',userRoutes);
 app.use('/api',leaderboardRoutes);
 app.use(errorHandler);
 app.use('/api/auth', require('./routes/auth'));
-
+app.use('/api/ai',require('./routes/aiRoutes'));
 
 
 

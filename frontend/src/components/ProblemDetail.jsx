@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/ProblemDetail.css';
+import ReactMarkdown from 'react-markdown';
+
 
 const ProblemDetail = () => {
   const { id } = useParams();
@@ -15,6 +17,8 @@ const ProblemDetail = () => {
   const [runResults, setRunResults] = useState([]); // sample test results
   const [verdicts, setVerdicts] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [simplifiedText, setSimplifiedText] = useState('');
+  const [loadingSimplify, setLoadingSimplify] = useState(false);
 
 
   useEffect(() => {
@@ -83,7 +87,21 @@ const ProblemDetail = () => {
 
   };
 
+  const handleSimplify = async () => {
+    setLoadingSimplify(true);
+    try {
+      const res = await axios.post('http://localhost:5000/api/ai/simplify',
+        { statement: problem.description },//problem is already defined at this point
+        { withCredentials: true });
+      setSimplifiedText(res.data.simplified);
 
+
+    } catch (err) {
+      setSimplifiedText('Failed to simplify. Please try again.');
+    } finally {
+      setLoadingSimplify(false);
+    }
+  };
 
 
   const handleRun = async () => {
@@ -128,10 +146,32 @@ const ProblemDetail = () => {
           <span className={`difficulty ${problem.difficulty.toLowerCase()}`}>{problem.difficulty}</span>
         </div>
 
-        <div className="section problem-description">
+        <div className="section-problem-description">
+          <div className='heading'>
           <h4>Description</h4>
-          <p>{problem.description}</p>
+          <button
+            className="simplify-btn"
+            onClick={handleSimplify}
+            disabled={loadingSimplify}
+            title="Get a beginner-friendly explanation"
+          >
+            {loadingSimplify ? 'Simplifying...' : 'Simplify this Problem'}
+          </button>
+          </div>
+          <div className="description-text">
+            <p>{problem.description}</p>
+          </div>
         </div>
+
+
+
+        {simplifiedText && (
+          <div className="simplified-box">
+            <h4>🧠 Simplified Explanation:</h4>
+            <ReactMarkdown>{simplifiedText}</ReactMarkdown>
+          </div>
+        )}
+
 
         <div className="section problem-constraints">
           <h4>Input Format</h4>
