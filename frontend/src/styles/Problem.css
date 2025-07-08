@@ -1,9 +1,14 @@
-problem-list-container {
-  background-color: #6073ae;
-  color: #f5f5f5;
+.problem-list-container {
+   --bg-start: #0c1120;
+  --bg-end:   #14102a;
+  background: radial-gradient(circle at 30% 20%, #182042 0%, var(--bg-start) 35%) ,
+              radial-gradient(circle at 70% 80%, #361654 0%, #1a1234 45%) ,
+              linear-gradient(180deg, var(--bg-end), var(--bg-start));
+  color: #e9ecf4;
+  font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   padding: 40px 60px;
-  font-family: 'Segoe UI', sans-serif;
+
 }
 
 .problem-list-header {
@@ -11,12 +16,15 @@ problem-list-container {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  
   padding: 20px 30px;
-  background: linear-gradient(90deg, #3a3f51, #22252c);
+ background: rgba(22, 28, 46, 0.55);              /* glass */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  height: 40px;
+  height: 30px;
 }
 
 .problem-list-header h2 {
@@ -51,20 +59,26 @@ problem-list-container {
 .problem-items {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .problem-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1c1f2b;
+  
   padding: 15px 25px;
   border-radius: 12px;
   text-decoration: none;
   color: white;
-  transition: background 0.3s, transform 0.2s;
+  background: rgba(22, 28, 46, 0.55);              /* glass */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   border: 1px solid #2b2f3e;
+  height: 10px;
+ 
 }
 
 .problem-item:hover {

@@ -1,11 +1,16 @@
 /* src/styles/Leaderboard.css */
 
 .leaderboard-container {
-  background-color: #16171a;
-  color: #ffffff;
+    --bg-start: #0c1120;
+  --bg-end:   #14102a;
+  background: radial-gradient(circle at 30% 20%, #182042 0%, var(--bg-start) 35%) ,
+              radial-gradient(circle at 70% 80%, #361654 0%, #1a1234 45%) ,
+              linear-gradient(180deg, var(--bg-end), var(--bg-start));
+  color: #e9ecf4;
+  font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   padding: 40px;
-  font-family: 'Segoe UI', sans-serif;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,6 +35,7 @@
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
+  
 }
 
 .leaderboard-table thead {

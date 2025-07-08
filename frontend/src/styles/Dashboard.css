@@ -1,0 +1,153 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;       /* allow height to expand */
+  min-height: 100vh;  /* baseline */
+  overflow-y: auto;   /* enable scrolling if needed */
+}
+
+.dashboard-container {
+  --bg-start: #0c1120;
+  --bg-end:   #14102a;
+  background: radial-gradient(circle at 30% 20%, #182042 0%, var(--bg-start) 35%) ,
+              radial-gradient(circle at 70% 80%, #361654 0%, #1a1234 45%) ,
+              linear-gradient(180deg, var(--bg-end), var(--bg-start));
+  color: #e9ecf4;
+  font-family: 'Segoe UI', sans-serif;
+ min-height: 100vh;        /* key: allow growing beyond viewport */
+  height: auto;             /* allow expansion based on content */
+  padding: clamp(2rem, 4vw, 3.5rem);
+          /* scroll if overflows */
+  display: block;  
+}
+
+/* ----  GRID  ---- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
+  gap: 2.25rem;
+}
+
+/* ---- GLASS CARD  --- */
+.card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 1.35rem 1.6rem;
+  backdrop-filter: blur(14px);
+  background: rgba(22, 28, 46, 0.55);              /* glass */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* subtle gradient edge “glow” */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #3a9dff, #aa52ff 60%, #ff4ee0);
+  filter: blur(28px);
+  opacity: 0.25;
+}
+
+/* ----  HEADINGS  ---- */
+.card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* --- PLACEHOLDER BOXES  ----*/
+
+.heatmap-placeholder {
+  height: 120px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1d263f 0%, #222d4a 100%);
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+}
+
+/* ---  STREAK TEXT  --- */
+.skill-card .streak {
+  margin-bottom: 0.85rem;
+  font-size: 0.96rem;
+  color: #a9b4cf;
+}
+
+/* ---  BADGES --- */
+.badge {
+  margin-left: 0.55rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  position: relative;
+  
+}
+.badge::after {                    /* glowing dot */
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  position: absolute;
+  left: 6px; top: calc(50% - 2px);
+}
+.badge.easy   { background: rgba(0, 255, 138, 0.12); color: #45ffb7; }
+.badge.easy::after { background: #45ffb7; }
+.badge.medium { background: rgba(255, 221, 85, 0.15); color: #ffd85b; }
+.badge.medium::after { background: #ffd85b; }
+.badge.hard   { background: rgba(255, 75, 75, 0.15); color: #ff7474; }
+.badge.hard::after { background: #ff7474; }
+
+/* ----  SUBMISSION STATUS DOT  ---- */
+.status {
+  display: inline-block;
+  width: 0.7rem; height: 0.7rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.status.Accept { background: #00e28f; box-shadow: 0 0 6px rgba(0,226,143,0.6); }
+.status.WrongAttempt { background: #ff4d6b; box-shadow: 0 0 6px rgba(255,77,107,0.6); }
+
+/* ---  BUTTON  ---- */
+.btn-primary {
+  margin-top: 0.95rem;
+  background: linear-gradient(130deg, #3ca9ff 0%, #635bff 100%);
+  border: none;
+  padding: 0.6rem 1.35rem;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+  box-shadow: 0 4px 10px rgba(98, 156, 255, 0.35);
+}
+.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(98, 156, 255, 0.5); }
+.btn-primary:active { transform: translateY(0);     filter: brightness(0.92); }
+
+/* ----  LISTS  ---- */
+.card ul, .card ol {
+  list-style: none;
+  margin: 0; padding: 0;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+.card li small { color: #6d7996; font-size: 0.75rem; }
+
+/* ----  LEADERBOARD NUMBERS  ---- */
+.lb-card ol li strong {
+  margin-right: 0.55rem;
+  color: #867aff;
+  font-weight: 700;
+}
+

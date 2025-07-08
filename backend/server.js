@@ -13,6 +13,8 @@ const userRoutes = require('./routes/UserRoutes');
 const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser');
+const dashboardRoutes = require('./routes/dashboard');
+const contestRoutes = require('./routes/contest');
 
 dotenv.config();//loads the .env file
 DBConnection();//runs the function
@@ -45,7 +47,8 @@ app.use('/api',leaderboardRoutes);
 app.use(errorHandler);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/ai',require('./routes/aiRoutes'));
-
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/contests', contestRoutes);
 
 
 app.get('/test-protected',authMiddleware,(req,res)=>{
