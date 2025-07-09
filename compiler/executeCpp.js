@@ -13,7 +13,7 @@ if (!fs.existsSync(outputPath)) {
 const executeCpp = async (filePath, inputFilePath) => {
   const jobId = path.basename(filePath).split(".")[0];//will extract the unique string from the path
   const codesDir = path.dirname(filePath);
-  const outputFilename = `${jobId}.exe`;
+  const outputFilename = `${jobId}.out`;
   const outPath = path.join(outputPath, outputFilename);
 
   const cmd = `cd "${codesDir}" && ` + `g++ "${jobId}.cpp" -o "${outPath}" && ` + `"${outPath}" < "${inputFilePath}"`

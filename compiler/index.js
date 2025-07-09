@@ -11,6 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+require('dotenv').config();
+
+
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
@@ -47,8 +50,9 @@ app.post("/run", async (req, res) => {
     }
 
 });
+const PORT = process.env.PORT || 3000;
 
-app.listen(8081, () => {
-    console.log("Server is running on port 8081");
+app.listen(PORT , () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
