@@ -1,0 +1,24 @@
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 16px); /* 7 columns × 6 rows = 42 cells */
+  
+    height: calc(18px * 6 + 10px);   /* 6 rows + gaps */
+  max-height: calc(18px * 6 + 10px);
+  column-gap: 4px;
+  row-gap: 1px;  
+   justify-content: center;  
+  align-items: center;   
+}
+
+.heat-cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;        /* perfectly square */
+  border-radius: 3px;
+  
+  transition: opacity 0.2s;
+   width: 13px;         /* fixed width  */
+  height: 15px;  
+}
+.heat-cell:hover {
+  outline: 1px solid rgba(255,255,255,0.5);
+}

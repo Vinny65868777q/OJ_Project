@@ -50,7 +50,7 @@ function Dashboard() {
          .catch(console.error);
 
       // 5) recent submissions
-      axios.get('http://localhost:5000/api/submission?limit=10', { withCredentials: true })
+      axios.get('http://localhost:5000/api/dashboard/submission', { withCredentials: true })
          .then(res => setSubs(res.data))
          .catch(console.error);
 
@@ -67,9 +67,15 @@ function Dashboard() {
 
    return (
       <div className="dashboard-container">
+         <div className="dashboard-hero">
+            <h1>
+               <span className="hero-highlight">Start&nbsp;your&nbsp;coding&nbsp;journey</span>
+            </h1>
+         </div>
+
          <div className="cards-grid">
             {/* 1 — Solved Problems */}
-            <div className="card chart-card">
+            <div className="card chart-card wide">
                <h3>Solved Problems</h3>
                <Chart data={stats.solvedHistory} />
             </div>
@@ -84,7 +90,7 @@ function Dashboard() {
             </div>
 
             {/* 3 — Upcoming Contest */}
-            <div className="card contest-card">
+            <div className="card contest-card tall">
                <h3>Upcoming Contest</h3>
                {contest && contest.startsAt ? (
                   <>
@@ -115,13 +121,19 @@ function Dashboard() {
             {/* 5 — Recent Submissions */}
             <div className="card subs-card">
                <h3>Recent Submissions</h3>
-               <ul>
-                  {submissions.map(s => (
-                     <li key={s._id}>
-                        <span className={`status ${s.verdict}`}>●</span>
-                        {s.title} <small>({timeAgo(s.submittedAt)})</small>
-                     </li>
-                  ))}
+               <ul className='scrollable'>
+                  {submissions.map(s => {
+
+                     const verdictCls = s.verdict.replace(/\s+/g, '-').toLowerCase(); // "Accepted"→accepted
+                     console.log(s.title)
+                     return (
+                        <li key={s._id}>
+                           <span className={`status-dot ${verdictCls}`}>●</span>
+                           <span className="sub-title">{s.title}</span>
+                           <small className="sub-time">({timeAgo(s.submittedAt)})</small>
+                        </li>
+                     );
+                  })}
                </ul>
             </div>
 
@@ -131,10 +143,12 @@ function Dashboard() {
                <ol>
                   {leaderboard.map((u, i) => (
                      <li
-                        key={u.userId || `${u.username}-${u.solvedCount}-${i}`}  /* always unique */
+                        key={u.userId || `${u.username}-${u.solvedCount}-${i}`}
+                        className={`rank-${i + 1}`}          /* add rank-X class (1-based)  */
                      >
-                        <strong>#{i + 1}</strong>{' '}
-                        {u.username} ({u.solvedCount})
+                        <span className={`rank-badge rank-${i + 1}`}>{i + 1}</span>
+                        <span className="lb-name">{u.username}</span>
+                        <span className="lb-score">{u.solvedCount}</span>
                      </li>
                   ))}
                </ol>

@@ -1,153 +1,256 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: auto;       /* allow height to expand */
-  min-height: 100vh;  /* baseline */
-  overflow-y: auto;   /* enable scrolling if needed */
+/* ============================================================
+   0. RESET / GLOBAL TOKENS
+============================================================ */
+:root {
+  --bg-outer-1: #111629;
+  --bg-outer-2: #090d18;
+  --glass      : rgba(30, 35, 60, 0.60);
+  --haze-a     : #4c7dff;
+  --haze-b     : #9d46ff;
+  --text-main  : #eaf2ff;
+  --text-fade  : #8a94b7;
+  --scroll     : #5d648c;
+  --badge-bg   : #3e3550;
+  --badge-txt  : #ffd85b;
 }
 
+/* wipe margin for root nodes */
+html, body { margin: 0; height: 100%; font-family: "Segoe UI", sans-serif; 
+overflow-y: auto;}
+body {
+  color: var(--text-main);
+  background:
+    radial-gradient(1100px circle at 25% 18%, #1c2648 0%, transparent 55%),
+    radial-gradient(900px circle at 75% 82%, #431c67 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-outer-1), var(--bg-outer-2));
+}
+
+/* ============================================================
+   1. CONTAINER + HERO
+============================================================ */
 .dashboard-container {
-  --bg-start: #0c1120;
-  --bg-end:   #14102a;
-  background: radial-gradient(circle at 30% 20%, #182042 0%, var(--bg-start) 35%) ,
-              radial-gradient(circle at 70% 80%, #361654 0%, #1a1234 45%) ,
-              linear-gradient(180deg, var(--bg-end), var(--bg-start));
-  color: #e9ecf4;
-  font-family: 'Segoe UI', sans-serif;
- min-height: 100vh;        /* key: allow growing beyond viewport */
-  height: auto;             /* allow expansion based on content */
-  padding: clamp(2rem, 4vw, 3.5rem);
-          /* scroll if overflows */
-  display: block;  
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3.2rem clamp(1rem, 4vw, 2.6rem);
 }
 
-/* ----  GRID  ---- */
-.cards-grid {
+.dashboard-hero   { text-align: center; margin-bottom: 3.6rem; }
+.dashboard-hero h1{
+  margin: 0;
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.hero-highlight{
+  background: linear-gradient(60deg,#a2b2bd 0%,#611ff0 45%,#ff59d3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   2. GRID  (auto masonry)
+============================================================ */
+.cards-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
-  gap: 2.25rem;
+  column-gap: 20px; /* smaller horizontal gap */
+  row-gap: 60px; 
+  grid-auto-flow: dense;                                  /* tuck cards */
+  grid-template-columns: repeat(auto-fill, minmax(900px, 9fr));
+}
+.wide{ grid-column: span 2; }                             /* solved problems */
+.tall{ grid-row   : span 2; }                             /* contest */
+
+@media (min-width: 1040px){
+  .cards-grid{
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 240px;
+  }
 }
 
-/* ---- GLASS CARD  --- */
-.card {
+/* ============================================================
+   3. CARD GLASS
+============================================================ */
+.card{
   position: relative;
-  border-radius: 16px;
+  height: 100%;
+  padding: 1.45rem 1.6rem;
+  border-radius: 20px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
   overflow: hidden;
-  padding: 1.35rem 1.6rem;
-  backdrop-filter: blur(14px);
-  background: rgba(22, 28, 46, 0.55);              /* glass */
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.35),
-    0 12px 28px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,.46);
+  outline: 1px solid rgba(255,255,255,.04);
+  transition: .2s transform, .2s box-shadow;
+}
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,.55);
 }
 
-/* subtle gradient edge “glow” */
-.card::before {
-  content: '';
+/* haze glow */
+.card::before{
+  content: "";
   position: absolute;
   inset: -2px;
-  z-index: -1;
   border-radius: inherit;
-  background: linear-gradient(135deg, #3a9dff, #aa52ff 60%, #ff4ee0);
-  filter: blur(28px);
-  opacity: 0.25;
+  background:
+    radial-gradient(circle at 28% 22%, var(--haze-a) 0%, transparent 55%),
+    radial-gradient(circle at 82% 78%, var(--haze-b) 0%, transparent 60%);
+  filter: blur(34px);
+  opacity: .28;
+  z-index: -1;
 }
+/* little extra pop on the chart card */
+.chart-card::before{ opacity: .40; }
 
-/* ----  HEADINGS  ---- */
-.card h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.18rem;
+.card h3{
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
 }
-
-/* --- PLACEHOLDER BOXES  ----*/
-
-.heatmap-placeholder {
-  height: 120px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #1d263f 0%, #222d4a 100%);
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+.card::after{
+  content:"";
+  position:absolute; inset:0; pointer-events:none;
+  border-radius:inherit;
+  padding:8px;                           /* ← border thickness */
+  background:linear-gradient(135deg,
+              #4c7dff 0%,
+              #120434 50%,
+              #ff59d3 100%);
+  -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);         /* keep interior hollow */
+  -webkit-mask-composite:xor;            /* Safari / Chrome */
+          mask-composite:exclude;        /* Firefox */
+  opacity:.35;                           /* dial this 0 – 1 for subtlety */
+  transition:opacity .25s;
 }
+.card:hover::after{ opacity:.55; } 
 
-/* ---  STREAK TEXT  --- */
-.skill-card .streak {
-  margin-bottom: 0.85rem;
-  font-size: 0.96rem;
-  color: #a9b4cf;
+/* ============================================================
+   4. HEATMAP
+============================================================ */
+.heatmap{
+  display: grid;
+  grid-template-columns: repeat(7, 18px);
+  column-gap: 4px; row-gap: 1px;
+  width: max-content;
+  margin-inline: auto;
 }
+.heat-cell{ width: 18px; height: 18px; border-radius: 3px; }
 
-/* ---  BADGES --- */
-.badge {
-  margin-left: 0.55rem;
-  padding: 0.25rem 0.8rem;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  position: relative;
-  
-}
-.badge::after {                    /* glowing dot */
-  content: '';
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  position: absolute;
-  left: 6px; top: calc(50% - 2px);
-}
-.badge.easy   { background: rgba(0, 255, 138, 0.12); color: #45ffb7; }
-.badge.easy::after { background: #45ffb7; }
-.badge.medium { background: rgba(255, 221, 85, 0.15); color: #ffd85b; }
-.badge.medium::after { background: #ffd85b; }
-.badge.hard   { background: rgba(255, 75, 75, 0.15); color: #ff7474; }
-.badge.hard::after { background: #ff7474; }
-
-/* ----  SUBMISSION STATUS DOT  ---- */
-.status {
-  display: inline-block;
-  width: 0.7rem; height: 0.7rem;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-}
-.status.Accept { background: #00e28f; box-shadow: 0 0 6px rgba(0,226,143,0.6); }
-.status.WrongAttempt { background: #ff4d6b; box-shadow: 0 0 6px rgba(255,77,107,0.6); }
-
-/* ---  BUTTON  ---- */
-.btn-primary {
-  margin-top: 0.95rem;
-  background: linear-gradient(130deg, #3ca9ff 0%, #635bff 100%);
-  border: none;
-  padding: 0.6rem 1.35rem;
-  border-radius: 12px;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
-  box-shadow: 0 4px 10px rgba(98, 156, 255, 0.35);
-}
-.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(98, 156, 255, 0.5); }
-.btn-primary:active { transform: translateY(0);     filter: brightness(0.92); }
-
-/* ----  LISTS  ---- */
-.card ul, .card ol {
+/* ============================================================
+   5. LISTS + SCROLLBAR
+============================================================ */
+.card ul, .card ol{
   list-style: none;
   margin: 0; padding: 0;
-  line-height: 1.6;
-  font-size: 0.9rem;
-}
-.card li small { color: #6d7996; font-size: 0.75rem; }
-
-/* ----  LEADERBOARD NUMBERS  ---- */
-.lb-card ol li strong {
-  margin-right: 0.55rem;
-  color: #867aff;
-  font-weight: 700;
+  line-height: 1.55;
+  font-size: .9rem;
 }
 
+/* shared scroll */
+.scrollable{
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.scrollable::-webkit-scrollbar{ width: 6px; }
+.scrollable::-webkit-scrollbar-thumb{
+  background: var(--scroll);
+  border-radius: 4px;
+}
+
+/* list rows */
+.recs-card li,
+.subs-card li,
+.lb-card  li{
+  display: flex;
+  align-items: center;
+  padding: 6px 4px;
+  gap: .55rem;
+  border-radius: 6px;
+  transition: background .15s;
+}
+.recs-card li:hover,
+.subs-card li:hover,
+.lb-card  li:hover{
+  background: rgba(255,255,255,.05);
+}
+.recs-card li+li,
+.subs-card li+li,
+.lb-card  li+li{
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+.sub-title, .lb-name{
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sub-time{ color: var(--text-fade); font-size: .75rem; }
+
+/* verdict dots */
+.status-dot{ font-size: .8rem; line-height: 0; }
+.status-dot.accepted{ color:#21e29a; text-shadow:0 0 4px #21e29a99; }
+.status-dot.wrong-answer{ color:#ff5d78; text-shadow:0 0 4px #ff5d7899; }
+
+/* ============================================================
+   6. BADGE PILL
+============================================================ */
+.badge{
+  margin-left: .55rem;
+  padding: .22rem .68rem;
+  border-radius: 999px;
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.badge.medium{ background: var(--badge-bg); color: var(--badge-txt); }
+
+/* ============================================================
+   7. LEADERBOARD MEDALS
+============================================================ */
+.rank-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem; height: 1.5rem;
+  font-size: .8rem; font-weight: 700;
+  border-radius: 50%; color: #111;
+}
+.rank-1 .rank-badge{ background: linear-gradient(145deg,#ffda5a,#ffc400); }
+.rank-2 .rank-badge{ background: linear-gradient(145deg,#e2e3e9,#c6c7d1); }
+.rank-3 .rank-badge{ background: linear-gradient(145deg,#f0b56f,#d88a37); }
+
+.lb-score{ color: var(--text-fade); font-size: .84rem; font-weight: 600; }
+.lb-card li:not(.rank-1):not(.rank-2):not(.rank-3) .rank-badge{
+  background: #37406b; color: #fff;
+}
+
+/* ============================================================
+   8. UTILITY   (streak text + button)
+============================================================ */
+.skill-card .streak{
+  margin-bottom: .9rem;
+  font-size: .96rem;
+  color: #a9b4cf;
+}
+.btn-primary{
+  margin-top: .95rem;
+  padding: .6rem 1.4rem;
+  border: none; border-radius: 12px;
+  font-size: .9rem; font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(130deg,#3ca9ff 0%,#635bff 100%);
+  box-shadow: 0 4px 14px rgba(98,156,255,.35);
+  transition: .18s transform, .18s box-shadow;
+}
+.btn-primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(98,156,255,.5);
+}
+.btn-primary:active{ transform:none; filter:brightness(.92); }
