@@ -4,13 +4,14 @@ const { body, validationResult } = require('express-validator');
 
 const getUserProfile = async (req, res, next) => {
     try {
-
+        
         const userId = req.user.id;//// from auth middleware
         const user = await User.findById(userId).select('-password');// exclude password
         if (!user) {
             return res.status(404).send('User Not Found');
         }
         res.status(200).send(user);
+        
 
     } catch (error) {
         next(error);

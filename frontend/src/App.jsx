@@ -13,7 +13,11 @@ import ProtectedAdminRoute from './Routes/ProtectedAdminRoute';
 import AddProblem from './pages/Admin/AddProblem';
 import AddTestCases from './pages/Admin/AddTestCases';
 import ProblemDetail from './components/ProblemDetail';
-import SubmissionDetail  from './pages/SubmissionDetail';
+import SubmissionDetail from './pages/SubmissionDetail';
+import ContestDetail from './pages/Admin/AddContest';
+import AddContest from './pages/Admin/AddContest';
+import ManageProblems from './pages/Admin/ManageProblem';
+import ContestDetailavailable from './pages/ContestDetail';
 
 function App() {
   return (
@@ -28,10 +32,14 @@ function App() {
           <Route path="submission" element={<PrivateRoute><Submissions /></PrivateRoute>} />
           <Route path="leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
         </Route>
-         <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
-         <Route path="/admin/add-problem" element={<ProtectedAdminRoute><AddProblem /></ProtectedAdminRoute>} />
-          <Route path="/admin/problem/:problemId/add-testcases" element={<ProtectedAdminRoute><AddTestCases /></ProtectedAdminRoute>} />
+        <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+        <Route path="/admin/add-problem" element={<ProtectedAdminRoute><AddProblem /></ProtectedAdminRoute>} />
+        <Route path="/admin/problem/:problemId/add-testcases" element={<ProtectedAdminRoute><AddTestCases /></ProtectedAdminRoute>} />
+        <Route path="/admin/createContest" element={<ProtectedAdminRoute><AddContest /></ProtectedAdminRoute>} />
+        <Route path="/admin/manage-problems" element={<ProtectedAdminRoute> <ManageProblems /></ProtectedAdminRoute>} />
+        <Route path="/contests/:id" element={<ContestDetailavailable />}/>
           <Route path="/problems/:id" element={<ProblemDetail/>}/>
+          <Route path="/contests/:cid/problems/:pid" element={<ProblemDetail />} />
           <Route path="/submission/:id"    element={<SubmissionDetail />} />
       </Routes>
     </BrowserRouter>

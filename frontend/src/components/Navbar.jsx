@@ -63,7 +63,7 @@ const Navbar = () => {
                     />
                     {dropdownOpen && (
                         <div className="avatar-dropdown">
-                            <button onClick={() => alert("Help Section Coming Soon!")}>Help</button>
+                            
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     )}

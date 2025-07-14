@@ -14,8 +14,8 @@ const AdminDashboard = () => {
         </div>
         <button onClick={() => navigate('/admin/add-problem')}><i className="fas fa-plus"></i> Add Problem</button>
         <button onClick={() => navigate('/admin/manage-problems')}><i className="fas fa-tasks"></i> Manage Problems</button>
-        <button onClick={() => navigate('/admin/submissions')}><i className="fas fa-upload"></i> View Submissions</button>
-        <button onClick={() => navigate('/logout')}><i className="fas fa-power-off"></i> Logout</button>
+        <button onClick={() => navigate('/admin/createContest')}><i className="fas fa-upload"></i> Add Contest</button>
+        <button onClick={() => navigate('/login')}><i className="fas fa-power-off"></i> Logout</button>
       </aside>
       
         <main className="dashboard-content">
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
         <div className="action-buttons">
           <button onClick={() => navigate('/admin/add-problem')}>Add New Problem</button>
           <button onClick={() => navigate('/admin/manage-problems')}>Problem List</button>
-          <button onClick={() => navigate('/admin/submissions')}>Submissions</button>
+          <button onClick={() => navigate('/admin/createContest')}>Add Contest</button>
         </div>
       </main>
     </div>

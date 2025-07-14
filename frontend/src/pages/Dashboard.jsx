@@ -4,17 +4,20 @@ import axios from 'axios';
 import Chart from '../components/Chart';
 import Heatmap from '../components/Heatmap';
 import Countdown from '../components/Countdown';
+import { Link } from 'react-router-dom';
 
 
 function Dashboard() {
 
    const [stats, setStats] = useState(null);
    const [skills, setSkills] = useState(null);
-   const [contest, setContest] = useState(null);
-   const [joining, setJoining] = useState(false);
+   const [contests, setContests] = useState([]);
+   const [joiningId, setJoiningId] = useState(false);
    const [recommended, setRec] = useState([]);
    const [submissions, setSubs] = useState([]);
    const [leaderboard, setLeaderboard] = useState([]);
+   const [registered, setReg] = useState(false);
+   const [userId, setUserId] = useState(null);
 
    const timeAgo = iso => {
       const diff = Math.floor((Date.now() - new Date(iso)) / 1000); // seconds
@@ -26,6 +29,19 @@ function Dashboard() {
    };
 
    useEffect(() => {
+      axios
+         .get('http://localhost:5000/api/user/profile', { withCredentials: true })
+         .then(res => {
+            setUserId(res.data._id);
+         })
+         .catch(err => {
+            console.error("Error fetching user:", err);
+         });
+   }, []);
+
+
+   useEffect(() => {
+      if (!userId) return;
 
       // 1) solved history
       axios
@@ -40,9 +56,13 @@ function Dashboard() {
          .catch(console.error);
 
       //3) contest
+      // fetch once
+
       axios.get('http://localhost:5000/api/contests/next', { withCredentials: true })
-         .then(res => setContest(res.data))
+         .then(res => setContests(res.data))        // ← array, rename state
          .catch(console.error);
+
+
 
       // 4) recommended problems
       axios.get('http://localhost:5000/api/dashboard/recommended-problems', { withCredentials: true })
@@ -59,9 +79,9 @@ function Dashboard() {
          .then(res => setLeaderboard(res.data))
          .catch(console.error);
 
-   }, []);
+   }, [userId]);
 
-   if (!stats || !skills || !contest) {
+   if (!stats || !skills) {
       return <div className="dashboard-container">Loading…</div>;
    }
 
@@ -91,18 +111,71 @@ function Dashboard() {
 
             {/* 3 — Upcoming Contest */}
             <div className="card contest-card tall">
-               <h3>Upcoming Contest</h3>
-               {contest && contest.startsAt ? (
-                  <>
-                     <p className="contest-title">{contest.title}</p>
-                     <p><Countdown to={contest.startsAt} /></p>
-                     <button className="btn-primary">Join Contest</button>
-                  </>
+                <div className="contest-scroll">
+               <h3>Contests</h3>
+               {contests.length === 0 ? (
+                  <p>No active contests</p>
                ) : (
-                  <p>No upcoming contests</p>
+                  contests.map(ct => {
+                     const alreadyJoined = ct.participants.some(p =>
+                        (typeof p === 'string' ? p : p._id || p.user || '').toString() === userId
+                     );
+                     const label = () => {
+                        if (alreadyJoined) {
+                           return ct.status === 'WAIT_RESULTS' ? 'Wait for results' : 'Registered';
+                        }
+                        if (ct.status === 'JOIN_NOW') return joiningId === ct._id ? 'Joining…' : 'Join Now';
+                        /* NO_MORE_TRIALS or WAIT_RESULTS for non-joined user */
+                        return 'No more trials';
+                     };
+
+                     // helper: can the button still be clicked?
+                     const clickable = !alreadyJoined && ct.status === 'JOIN_NOW';
+
+                     return (
+                        <div key={ct._id} className="contest-box">
+                           <p className="contest-title">{ct.title}</p>
+                           <p className="countdown"><Countdown to={ct.startAt} /></p>
+
+                           <button
+                              className="btn-primary"
+                              disabled={!clickable || joiningId === ct._id}              
+                              onClick={async () => {
+                                 if (!clickable || joiningId) return;
+                                 setJoiningId(ct._id);
+
+                                 try {
+                                    await axios.post(
+                                       `http://localhost:5000/api/contests/${ct._id}/join`,
+                                       {},
+                                       { withCredentials: true }
+                                    );
+
+                                   
+                                    const { data } = await axios.get(
+                                       'http://localhost:5000/api/contests/next',
+                                       { withCredentials: true }
+                                    );
+                                    setContests(data);
+                                 } catch (e) {
+                                    alert(e.response?.data?.error || 'Error registering');
+                                 } finally {
+                                    setJoiningId(null);
+                                 }
+                              }}
+                           >
+                              {label()}                                               
+                           </button>
+
+                           <Link to={`/contests/${ct._id}`} className="btn-ghost">
+                              View details
+                           </Link>
+                        </div>
+                     );
+                  })
                )}
             </div>
-
+             </div>
             {/* 4 — Recommended Problems */}
             <div className="card recs-card">
                <h3>Recommended Problems</h3>
@@ -125,7 +198,7 @@ function Dashboard() {
                   {submissions.map(s => {
 
                      const verdictCls = s.verdict.replace(/\s+/g, '-').toLowerCase(); // "Accepted"→accepted
-                     console.log(s.title)
+
                      return (
                         <li key={s._id}>
                            <span className={`status-dot ${verdictCls}`}>●</span>

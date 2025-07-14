@@ -21,6 +21,7 @@
   flex-direction: column;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
+  scrollbar-width: none;
   gap: 7px;
 }
 
@@ -145,6 +146,7 @@ font-size: 20px;
 .hint-box {             
   max-height: 260px;
   overflow-y: auto;
+  scrollbar-width: none;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
@@ -263,4 +265,35 @@ hr { border: none; border-top: 1px solid #444; margin: 8px 0; }
   color: #ccc;
   text-align: center;
   margin-top: 40px;
+}
+
+/* ────────── Input / Output Format card (left column) ────────── */
+
+.problem-constraints {
+  /* base “section” styles are already set – we just tighten + recolor */
+  background: #2f3346;                     /* same hue family as .example-block */
+  border-left: 4px solid #00d4ff;          /* cyan accent to differ from samples */
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 22px 24px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: transform .18s, box-shadow .18s;
+}
+
+.problem-constraints:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+}
+
+.problem-constraints h4 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #e3ebf3;
+}
+
+.problem-constraints p {
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: #dfe6f1;
 }

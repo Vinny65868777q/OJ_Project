@@ -1,8 +1,16 @@
 .admin-dashboard {
   display: flex;
   height: 100vh;
-  background-color: #0b0b0b;
-  color: #fff;
+   --bg-outer-1: #111629;
+  --bg-outer-2: #090d18;
+  --glass      : rgba(30, 35, 60, 0.60);
+  --haze-a     : #4c7dff;
+  --haze-b     : #9d46ff;
+  --text-main  : #eaf2ff;
+  --text-fade  : #8a94b7;
+  --scroll     : #5d648c;
+  --badge-bg   : #3e3550;
+  --badge-txt  : #ffd85b;
   font-family: 'Segoe UI', sans-serif;
 }
 

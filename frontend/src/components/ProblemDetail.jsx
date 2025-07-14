@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/ProblemDetail.css';
 import ReactMarkdown from 'react-markdown';
 
 
 const ProblemDetail = () => {
-  const { id } = useParams();
+  const { id: standaloneId, cid, pid } = useParams();
   const [problem, setProblem] = useState(null);
   const [testCases, setTestCases] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,25 +25,83 @@ const ProblemDetail = () => {
   const [loadingHint, setLoadingHint] = useState(false);
   const [hintModalOpen, setHintModalOpen] = useState(false);
 
+  const [contestInfo, setContestInfo] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [accessDenied, setAccessDenied] = useState(false);
+  const contestId = cid ?? null;
+  const id        = pid ?? standaloneId;
+
 
   useEffect(() => {
-    const fetchProblem = async () => {
-      try {
-        const [probRes, tcRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/problem/${id}`),
-          axios.get(`http://localhost:5000/api/testcase/problem/${id}`)
-        ]);
-        setProblem(probRes.data);
-        setTestCases(tcRes.data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!contestId) return;   // normal standalone problem: no gating
+    axios.get('http://localhost:5000/api/user/profile', { withCredentials: true })
+      .then(r => setUserId(r.data._id))
+      .catch(console.error);
+  }, [contestId]);
 
-    fetchProblem();
-  }, [id]);
+  /* 2) fetch contest meta so we know start/end times and participants */
+  useEffect(() => {
+    if (!contestId) return;
+    axios.get(`http://localhost:5000/api/contests/${contestId}`, { withCredentials: true })
+      .then(r => setContestInfo(r.data))
+      .catch(console.error);
+  }, [contestId]);
+
+  /* 3) decide access once all pieces are loaded */
+  useEffect(() => {
+    if (!contestId || !contestInfo || userId === null) return;
+  console.log(contestInfo);
+    const now = Date.now();
+   
+    const startMs = new Date(contestInfo.startAt).getTime();
+    const endMs = new Date(contestInfo.endAt).getTime();
+    const ended  = now >= endMs;
+
+   const joined = userId &&                      // if userId is falsy → joined = false
+   contestInfo.participants.some(p =>
+      (typeof p === 'string' ? p : p._id || p.user || '').toString() === userId
+    );
+
+    // block whenever the contest hasn’t ended AND the visitor didn’t join
+    setAccessDenied(!ended && !joined);
+  }, [contestId, contestInfo, userId]);
+
+/* LOAD PROBLEM + TEST CASES — works for both contest & standalone */
+useEffect(() => {
+  setLoading(true);
+
+  // 1. fetch from the new contest-specific route
+  const fetchContestProblem = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/contests/${contestId}/problems/${id}`,
+      { withCredentials: true }
+    );
+    setProblem(data);
+    setTestCases(data.testCases || []);
+  };
+
+  // 2. fallback: normal global problem fetch
+  const fetchStandaloneProblem = async () => {
+    const [probRes, tcRes] = await Promise.all([
+      axios.get(`http://localhost:5000/api/problem/${id}`),
+      axios.get(`http://localhost:5000/api/testcase/problem/${id}`)
+    ]);
+    setProblem(probRes.data);
+    setTestCases(tcRes.data);
+  };
+
+  (contestId ? fetchContestProblem() : fetchStandaloneProblem())
+      .catch(err => {
+   if (err.response?.status === 403) {
+      setAccessDenied(true);
+    } else {
+      console.error(err);
+    }
+  })
+
+    .finally(() => setLoading(false));
+}, [id, contestId]);
+
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -94,6 +152,7 @@ const ProblemDetail = () => {
     }, { withCredentials: true });
 
   };
+
 
   const handleSimplify = async () => {
     setLoadingSimplify(true);
@@ -180,6 +239,14 @@ const ProblemDetail = () => {
   if (loading) return <div className="loading">Loading...</div>;
   if (!problem) return <div className="problem-error">Problem not found</div>;
 
+  if (accessDenied) {
+  return (
+   <div style={{ textAlign:'center', marginTop:'3rem' }}>
+     🔒 This problem is locked while the contest is live.<br/>
+      Join the contest or wait until it ends to view the details.
+    </div>
+  );
+}
   return (
     <div className="problem-detail-container">
       <div className="left-panel">

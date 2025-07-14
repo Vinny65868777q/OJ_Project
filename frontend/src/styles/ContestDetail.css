@@ -1,0 +1,56 @@
+
+.contest-detail{
+  max-width:900px;
+  margin:2.5rem auto;
+  padding:2.4rem 2.8rem;
+  border-radius:22px;
+  background:rgba(24,28,46,.6);
+  backdrop-filter:blur(18px);
+  box-shadow:0 12px 32px rgba(0,0,0,.55);
+  position:relative;
+  color:#e5e9ff;
+}
+.contest-detail::before{
+  content:"";position:absolute;inset:-2px;border-radius:inherit;z-index:-1;
+  background:linear-gradient(135deg,#4e7bff 0%,#8c58ff 55%,#ff46c4 100%);
+  filter:blur(36px);opacity:.22;
+}
+
+.contest-detail header{text-align:center;margin-bottom:2.6rem;}
+.contest-detail h1{margin:0;font-size:2rem;font-weight:700;}
+.contest-detail .subtitle{opacity:.8;font-size:1.05rem;margin:.7rem 0 0;}
+
+/* status badges */
+.badge{
+  display:inline-block;padding:.28rem .85rem;border-radius:12px;
+  font-size:.78rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.05em;margin-top:1.2rem;
+}
+.badge.upcoming {background:#ffc447;color:#2a1d00; margin-right: 9px;}
+.badge.live     {background:#ff478d;color:#330013; margin-right: 9px;}
+.badge.ended    {background:#6b7cff;color:#08083b; margin-right: 9px;}
+
+/* live countdown pill */
+.count-pill{
+  margin:1.2rem auto 0;
+  display:inline-block;
+  padding:.55rem 1rem;
+  font-family:"Segoe UI Mono",monospace;
+  font-size:1.15rem;font-weight:600;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+}
+
+.problem-table{
+  margin-top:1.6rem;
+}
+.problem-table table{width:100%;border-collapse:collapse;}
+.problem-table th,.problem-table td{
+  padding:.75rem .55rem;text-align:left;
+}
+.problem-table tbody tr:nth-child(odd){
+  background:rgba(255,255,255,.03);
+}
+.problem-table a{color:#4e9dff;text-decoration:none;}
+.problem-table a:hover{text-decoration:underline;}

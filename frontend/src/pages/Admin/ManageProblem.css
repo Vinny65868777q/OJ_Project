@@ -1,0 +1,30 @@
+.manage-container{
+  max-width:900px;margin:3.5rem auto;padding:2.4rem 3rem;
+  background:rgba(34,40,70,.6);backdrop-filter:blur(20px);
+  border-radius:24px;box-shadow:0 12px 32px rgba(0,0,0,.55);
+  position:relative;color:#eaf0ff;font-family:'Segoe UI',sans-serif;
+}
+.manage-container::before{
+  content:"";position:absolute;inset:-2px;border-radius:inherit;z-index:-1;
+  background:linear-gradient(135deg,#4c7dff 0%,#8e5cff 55%,#ff5bd2 100%);
+  filter:blur(36px);opacity:.23;
+}
+.manage-container h2{
+  margin:0 0 1.6rem;font-weight:700;font-size:1.55rem;text-align:center;
+  background:linear-gradient(90deg,#4c7dff 0%,#8e5cff 55%,#ff5bd2 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+table{width:100%;border-collapse:collapse;font-size:.92rem;}
+thead tr{background:rgba(255,255,255,.05);}
+th,td{padding:.85rem 1rem;text-align:left;}
+tr:not(:last-child){border-bottom:1px solid rgba(255,255,255,.06);}
+.diff-chip{
+  padding:.18rem .6rem;border-radius:10px;font-size:.72rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.03em;
+}
+.diff-chip.easy{background:rgba(0,255,138,.12);color:#45ffb7;}
+.diff-chip.medium{background:rgba(255,221,85,.15);color:#ffd85b;}
+.diff-chip.difficult{background:rgba(255,75,75,.15);color:#ff7474;}
+
+.center-msg{text-align:center;margin:3rem 0;font-size:1rem;}

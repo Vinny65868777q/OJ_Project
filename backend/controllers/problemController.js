@@ -48,41 +48,17 @@ const getProblemById = async (req, res, next) => {
     }
 
 };
-//update controller API
-const updateProblem = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const updateData = req.body;
+const getMyProblems = async (req, res, next) => {
+  try {
+    const rows = await Problems
+      .find({ createdBy: req.user.id })
+      .select('title description difficulty createdAt')
+      .sort({ createdAt: -1 })
+      .lean();
 
-        const upadatedProblem = await Problems.findByIdAndUpdate(id, updateData, {
-            new: true,  // return the updated document
-            runValidators: true //schema validations (like required: true, or enum values like "easy", "medium", "hard") are still checked even during update.
-        });
-
-        if (!upadatedProblem) {
-            return res.status(404).send('Problem not Found');
-        }
-        res.status(200).send(upadatedProblem);
-    } catch (error) {
-        next(error);
-    }
+    res.json(rows);
+  } catch (err) { next(err); }
 };
 
-const deleteProblem = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const deletedproblem = await Problems.findByIdAndDelete(id);
-        if (!deletedproblem) {
-            return res.status(404).send('Problem not Found');
-        }
-        res.status(200).send("Problem deleted successfully");
-
-    } catch (error) {
-        next(error);
-    }
-
-};
-
-module.exports = { createProblem, getAllProblem, getProblemById, updateProblem, deleteProblem };
+module.exports = { createProblem, getAllProblem, getProblemById,getMyProblems };
 

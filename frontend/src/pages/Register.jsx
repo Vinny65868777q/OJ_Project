@@ -63,7 +63,7 @@ function Register() {
                             <button className="button" type="submit">Sign Up</button>
                             {error && <p className="error-message">{error}</p>}{/*if error exists then show in red that msg else show nothing*/}
                         </form>
-                        <p>Already have an account? <a href="/login">Login here</a></p>
+                        <p className='already-message'>Already have an account? <a href="/login">Login here</a></p>
                     </div>
                 </div>
             </div>

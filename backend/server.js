@@ -33,6 +33,7 @@ app.use(cors({
 
 }));
 
+
 app.use(express.json());//This tells the server to accept data in JSON format
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
