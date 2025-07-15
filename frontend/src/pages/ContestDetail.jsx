@@ -13,7 +13,7 @@ export default function ContestDetail() {
     /* ───────────────── fetch once ───────────────── */
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/contests/${id}`, {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/contests/${id}`, {
                 withCredentials: true,
             })
             .then((res) => setContest(res.data))

@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res, next) => {
     try {
-        const { firstname, lastname, email, password, role } = req.body;
+        const { firstname, lastname, email, password } = req.body;
 
         const existingUser = await User.findOne({ email })
         if (existingUser) {
@@ -64,18 +64,18 @@ const loginUser = async (req, res, next) => {
         }, process.env.SECRET_KEY,
             { expiresIn: "1d" }//expiresIn: '1d' means the token is valid for only 1 day – after that, the user has to log in again.
         );
-        
-        
+
+
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // HTTPS only in prod
-            sameSite: process.env.NODE_ENV==='production' ? 'Strict' : 'Lax', // Prevents CSRF - Cookie is only sent on your site, not when someone else tries to use your login link.
-            maxAge: 24 * 60 * 60 * 1000 // 1 day 24 hours × 60 min × 60 sec × 1000 ms
-           
+            secure: process.env.NODE_ENV === 'production',  
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            maxAge: 24 * 60 * 60 * 1000
+
         });
 
         res.status(200).json({
-            message: "Login successful",role:user.role
+            message: "Login successful", role: user.role
         });
 
     } catch (error) {

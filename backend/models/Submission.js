@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+
+const snapshotSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    title: String,
+    difficulty: String
+}, { _id: false });
+
+
 const submissionSchema = new mongoose.Schema({
 
     userId: {
@@ -7,11 +15,26 @@ const submissionSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+
+    contestId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contest',
+        default: null
+    },
+
+
+
     problemId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Problem',
         required: true
     },
+
+    problemSnapshot: {
+        type: snapshotSchema,
+        required: true
+    },
+
     code: {
         type: String,
         required: true
@@ -27,13 +50,13 @@ const submissionSchema = new mongoose.Schema({
     },
     submittedAt: {
         type: Date,
-        default:Date.now
+        default: Date.now
 
     },
     executionTime: {
-    type: Number, // in milliseconds
-    default: null
-  }
+        type: Number, // in milliseconds
+        default: null
+    }
 
 });
 

@@ -10,7 +10,7 @@ const Leaderboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/leaderboard',
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/leaderboard`,
                     { withCredentials: true });
                 setEntries(res.data);
             } catch (error) {

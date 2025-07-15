@@ -46,7 +46,7 @@ export default function AddContest() {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/contests/with-problems',
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/contests/with-problems`,
                 { title, description, startAt, endAt, problems },
                 { withCredentials: true });
             setMsg('Contest created with problems ✅');

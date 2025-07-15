@@ -91,11 +91,11 @@ exports.getSubmission = async (req, res, next) => {
     // cast to ObjectId so the query matches properly
     const userObjectId = new mongoose.Types.ObjectId(req.user.id);
 
-    // optional ?limit=10 (default 10 if not provided)
+    // limit=10 (default 10 if not provided)
     const limit = parseInt(req.query.limit, 10) || 10;
 
     const submissions = await Submission.find({ userId: userObjectId })
-      .populate('problemId', 'title difficulty')   // add fields you need
+   
       .sort({ submittedAt: -1 })
       .limit(limit)
       .lean();
@@ -103,7 +103,7 @@ exports.getSubmission = async (req, res, next) => {
     /* format exactly what the dashboard needs */
     const payload = submissions.map(s => ({
       _id        : s._id,
-      title      : s.problemId.title,
+      title      :  s.problemSnapshot?.title || 'Unknown',  // <- safe
       verdict    : s.verdict,        // “Accepted”, “Wrong Answer”, etc.
       submittedAt: s.submittedAt
     }));
@@ -111,6 +111,7 @@ exports.getSubmission = async (req, res, next) => {
     res.status(200).json(payload);
 
   } catch (error) {
+     console.error('Submission Fetch Error:', error); 
     next(error);
   }
 };

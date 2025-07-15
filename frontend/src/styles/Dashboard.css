@@ -14,7 +14,8 @@
 
 /* wipe margin for root nodes */
 html, body { margin: 0; height: 100%; font-family: "Segoe UI", sans-serif; 
-overflow-y: auto;}
+overflow-y: auto;
+scrollbar-width: none;}
 body {
   color: var(--text-main);
   background:
@@ -159,11 +160,6 @@ body {
   overflow-y: scroll; 
   scrollbar-width: none; 
 }
-.scrollable::-webkit-scrollbar{ width: 6px; }
-.scrollable::-webkit-scrollbar-thumb{
-  background: var(--scroll);
-  border-radius: 4px;
-}
 
 /* list rows */
 .recs-card li,
@@ -202,6 +198,7 @@ body {
 
 .badge{
   margin-left: .55rem;
+  margin-bottom: 15px;
   padding: .22rem .68rem;
   border-radius: 999px;
   font-size: .64rem;
@@ -245,6 +242,7 @@ body {
   box-shadow: 0 4px 14px rgba(98,156,255,.35);
   transition: .18s transform, .18s box-shadow;
   color: rgb(244, 239, 229);
+  text-decoration: none;
 }
 .btn-primary:hover{
   transform: translateY(-2px);

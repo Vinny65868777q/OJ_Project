@@ -1,7 +1,7 @@
 const TestCase = require('../models/TestCase');
 
 const createTestCase = async (req, res,next) => {
-console.log('🔥 createTestCase req.body:', req.body);
+
     try {
         const { problemId, input, expectedOutput, isSample } = req.body;
 

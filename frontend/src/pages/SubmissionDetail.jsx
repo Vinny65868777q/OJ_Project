@@ -11,7 +11,7 @@ const SubmissionDetail =  () => {
     useEffect(() => {
         const fetch = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/submission/${id}`,
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/submission/${id}`,
                     { withCredentials: true });
                 setSub(res.data);
             } catch (err) {
@@ -33,7 +33,7 @@ const SubmissionDetail =  () => {
       <h2>Submission Details</h2>
       
         <div className="meta">
-        <p><strong>Problem:</strong> {sub.problemId.title}</p>
+        <p><strong>Problem:</strong> {sub.title}</p>
         <p><strong>Language:</strong> {sub.language.toUpperCase()}</p>
         <p><strong>Verdict:</strong> {sub.verdict}</p>
         <p><strong>Runtime:</strong> {sub.executionTime ?? '-'} ms</p>

@@ -11,7 +11,7 @@ const Problem = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/problem/', {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/problem/`, {
           withCredentials: true,
         });
         setProblems(res.data);

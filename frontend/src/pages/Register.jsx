@@ -26,7 +26,7 @@ function Register() {
         e.preventDefault();//stops the page from refreshing when a form is submitted.
         setError('');//Clears any previous error message before trying again.
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, formData);
             alert(res.data.msg);
             navigate('/login');
         } catch (error) {

@@ -6,6 +6,10 @@ const validateSubmission = [
         .notEmpty().withMessage('Problem ID is required')
         .isMongoId().withMessage('Problem ID must be a valid Mongo ID'),
 
+    body('contestId')
+        .optional({ checkFalsy: true })  // allows undefined, null, or empty
+        .isMongoId().withMessage('Contest ID must be a valid Mongo ID'),
+        
     body('code')
         .notEmpty().withMessage('Code is required'),
 
@@ -15,7 +19,7 @@ const validateSubmission = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json( errors.array());
+            return res.status(400).json(errors.array());
         }
         next();
     }

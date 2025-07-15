@@ -7,7 +7,7 @@ export default function ManageProblems() {
   const [errMsg,   setErr]      = useState('');
 
   useEffect(()=>{
-    axios.get('http://localhost:5000/api/problem/allmyproblem', { withCredentials:true })
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/problem/allmyproblem`, { withCredentials:true })
          .then(res=>setProblems(res.data))
          .catch(err=>setErr(err.response?.data?.error || 'Error'));
   },[]);

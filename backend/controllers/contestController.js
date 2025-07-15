@@ -82,63 +82,69 @@ exports.getContestById = async (req, res, next) => {
 exports.getContestProblem = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
- 
+
     const contest = await Contest.findById(cid).lean();
     if (!contest) return res.status(404).json({ error: 'Contest not found' });
 
     const prob = contest.problems.find(
       p => p._id.toString() === pid
     );
-    if (!prob)   return res.status(404).json({ error: 'Problem not found' });
-    if (contest.isLive && !contest.participants.includes(user._id)) {
-  return res.status(403).json({ message: 'Access denied during live contest' });
-}
+    if (!prob) return res.status(404).json({ error: 'Problem not found' });
+    if (contest.isLive && !contest.participants.some(p => p.toString() === user._id.toString())) {
+      return res.status(403).json({ message: 'Access denied during live contest' });
+    }
 
     res.json(prob);                // includes its embedded testCases[]
   } catch (err) { next(err); }
 }
 
-/* -- contest leaderboard -- */
+
 exports.getLeaderboard = async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    // aggregate each user’s accepted submissions in this contest window
-    const contest = await Contest.findById(id).lean();
+    const { id: contestId } = req.params;
+    const contest = await Contest.findById(contestId).lean();
     if (!contest) return res.status(404).json({ ok: false, error: 'Contest not found' });
 
+    // collect the embedded‐problem IDs
+    const problemIds = contest.problems.map(p => p._id);
+
     const rows = await Submission.aggregate([
-      {
-        $match: {
-          problemId: { $in: contest.problems },
+      { $match: {
           verdict: 'Accepted',
-          submittedAt: { $gte: contest.startAt, $lte: contest.endAt }
-        }
-      },
-      {
-        $group: {
+          submittedAt: { $gte: contest.startAt, $lte: contest.endAt },
+          $or: [
+            // newly‐saved submissions that have contestId
+            { contestId: new mongoose.Types.ObjectId(contestId) },
+            // older submissions saved only under problemId
+            { problemId: { $in: problemIds } }
+          ]
+      }},
+      { $group: {
           _id: '$userId',
           score: { $sum: 1 },
-          last: { $max: '$submittedAt' }
-        }
-      },
+          last:  { $max: '$submittedAt' }
+      }},
       { $sort: { score: -1, last: 1 } },
-      {
-        $lookup: {
+      { $lookup: {
           from: 'users',
           localField: '_id',
           foreignField: '_id',
           as: 'user'
-        }
-      },
+      }},
       { $unwind: '$user' },
-      { $project: { username: '$user.username', score: 1 } },
+      { $project: {
+          _id:     0,
+          userId: '$_id',
+          username: { $concat: ['$user.firstname', ' ', '$user.lastname'] },
+          score:  1
+      }},
       { $limit: 10 }
     ]);
 
-    // attach ranks
+    // attach 1-based rank
     const leaderboard = rows.map((r, i) => ({ rank: i + 1, ...r }));
     res.json(leaderboard);
+
   } catch (err) {
     next(err);
   }
@@ -165,11 +171,11 @@ exports.createContest = async (req, res, next) => {
         });
     }
 
-const contest = await Contest.create({
-     title, description,
-     /* convert once to true UTC ISO strings */
-     startAt:localToUTC(startAt),   // 2025-07-16T04:30:00.000Z
-     endAt  : localToUTC(endAt),
+    const contest = await Contest.create({
+      title, description,
+      /* convert once to true UTC ISO strings */
+      startAt: localToUTC(startAt),   // 2025-07-16T04:30:00.000Z
+      endAt: localToUTC(endAt),
       problems,
       createdBy: req.user.id
     });

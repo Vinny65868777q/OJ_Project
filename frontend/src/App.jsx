@@ -18,6 +18,7 @@ import ContestDetail from './pages/Admin/AddContest';
 import AddContest from './pages/Admin/AddContest';
 import ManageProblems from './pages/Admin/ManageProblem';
 import ContestDetailavailable from './pages/ContestDetail';
+import ContestLeaderboard from './pages/ContestLeaderBoard';
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           <Route path="/problems/:id" element={<ProblemDetail/>}/>
           <Route path="/contests/:cid/problems/:pid" element={<ProblemDetail />} />
           <Route path="/submission/:id"    element={<SubmissionDetail />} />
+          <Route path="/contests/:id/leaderboard" element={<ContestLeaderboard />} />
+
       </Routes>
     </BrowserRouter>
   );
