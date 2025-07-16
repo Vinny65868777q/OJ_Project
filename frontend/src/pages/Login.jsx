@@ -57,7 +57,7 @@ function Login() {
                     <button type="submit">Login</button>
                 </form>
 
-                <p className='already-message'>Don't have an account? <a href="/register">Register here</a></p>
+                <p className='already-message'>Don't have an account? <Link to="/register">Register here</Link></p>
             </div>
         </div>
     );

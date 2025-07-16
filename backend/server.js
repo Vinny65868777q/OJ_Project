@@ -23,7 +23,10 @@ DBConnection();//runs the function
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite frontend origin
+   origin: [
+    "https://judgex.space",
+    "https://www.judgex.space"
+  ],
   credentials: true,
   exposedHeaders: [
     'RateLimit-Limit',
@@ -70,10 +73,4 @@ app.listen(process.env.PORT, () => {//.listen() is a method that starts the serv
   console.log(`Server is listening on port ${process.env.PORT}!`);// when server is runing it will print this msg on terminal
 });//it is a callback function
 
-mongoose.connection.on('connected', () => {
-  console.log("✅ MongoDB connected");
-});
 
-mongoose.connection.on('error', (err) => {
-  console.error("❌ MongoDB error:", err);
-});

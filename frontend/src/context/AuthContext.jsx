@@ -40,13 +40,13 @@ export const AuthProvider = ({ children }) => {
       method: "POST",
       credentials: "include",
     });
-    console.log("VERIFY RESULT:", res.status); 
+    
   } catch (err) {
     console.error("Logout failed:", err);
   }
   
   setIsLoggedIn(false);
-  console.log("VERIFY RESULT:", res.status);
+  
 
 };
 
