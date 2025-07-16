@@ -198,15 +198,29 @@ body {
 
 .badge{
   margin-left: .55rem;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   padding: .22rem .68rem;
   border-radius: 999px;
   font-size: .64rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: .03em;
   text-transform: uppercase;
 }
-.badge.medium{ background: var(--badge-bg); color: var(--badge-txt); }
+/* Hard-coded colors */
+.badge.easy {
+  background: #5cb85c; /* green */
+  color: #fff;
+}
+
+.badge.medium {
+  background: #f0ad4e; /* orange */
+  color: #fff;
+}
+
+.badge.difficult {
+  background: #d9534f; /* red */
+  color: #fff;
+}
 
 
 .rank-badge{

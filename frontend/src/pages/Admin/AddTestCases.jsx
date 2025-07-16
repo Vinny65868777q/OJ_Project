@@ -43,7 +43,7 @@ const AddTestCases = () => {
     const testCase = allCases[i];
     try {
       await axios.post(
-        `import.meta.env.VITE_BACKEND_URL}/api/testcase/create`,
+       `${import.meta.env.VITE_BACKEND_URL}/api/testcase/create`,
         { ...testCase, problemId },
         { withCredentials: true }
       );

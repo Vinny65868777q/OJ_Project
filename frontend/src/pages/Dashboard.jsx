@@ -206,7 +206,7 @@ function Dashboard() {
             {/* 4 — Recommended Problems */ }
    <div className="card recs-card">
       <h3>Recommended Problems</h3>
-      <ul>
+      <ul className='scrollable'>
          {recommended.map(p => (
             <li key={p._id}>
                {p.title}

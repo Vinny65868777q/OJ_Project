@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
  useEffect(() => {
   const checkAuth = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verif`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify`, {
         credentials: "include",
       });
 
@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   checkAuth();
 }, []);
+
 
 
   const login  = () => setIsLoggedIn(true); 
