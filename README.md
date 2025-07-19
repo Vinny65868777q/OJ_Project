@@ -1,53 +1,61 @@
-Judgex – Code. Compete. Conquer.
-Judgex is a full-featured online coding judge and contest management platform built for developers, educators, and competitive programmers. It supports real-time code execution, problem-solving, contests, detailed analytics, and AI-powered guidance — all within a secure, scalable infrastructure.
+# ⚔️ Judgex – Code. Compete. Conquer.
 
+**Judgex** is a full-featured online coding judge and contest management platform built for developers, educators, and competitive programmers. It supports real-time code execution, problem-solving, contests, detailed analytics, and AI-powered guidance — all within a secure, scalable infrastructure.
 
-Features
+---
 
-Authentication & Security
+##  Features
 
-Secure registration and login with JWT 
-Passwords hashed using bcrypt
-CORS-protected API with domain-restricted access
+###  Authentication & Security
 
-Problem & Contest Management
+- Secure registration and login with **JWT**  
+- Passwords hashed using **bcrypt**  
+- **CORS-protected** API with domain-restricted access  
 
-Create and manage contests with scheduled timings(Admin)
-Reusable problem sets with difficulty tagging
-Admin dashboard to control problem order and visibility
+###  Problem & Contest Management
 
-Real-Time Code Execution
+- Create and manage contests with scheduled timings (**Admin only**)  
+- Reusable problem sets with **difficulty tagging**  
+- Admin dashboard to control **problem order and visibility**  
 
-Docker-based isolated compiler service
-Multi-language support (C++, Python, JavaScript, etc.)
-Instant feedback for test case results
+###  Real-Time Code Execution
 
-AI-Assisted Submissions
+- **Docker-based** isolated compiler service  
+- Multi-language support (**C++, Python, JavaScript**, etc.)  
+- Instant feedback for **test case results**  
 
-Gemini-based hints for first wrong submissions
-Encourages learning without giving away solutions
-Also helps you undersand the complex problem statement by simplifying it 
+###  AI-Assisted Submissions
 
-User Dashboard & Analytics
+- **Gemini-powered hints** for first wrong submissions  
+- Encourages learning without giving away direct solutions  
+- Simplifies **complex problem statements** to aid understanding  
 
-Submission history with verdicts and timestamps
-Line charts to visualize coding activity over time
-Profile stats: total solved, contests participated, ranks, etc.
+###  User Dashboard & Analytics
 
-Deployment & DevOps
+- View **submission history** with verdicts and timestamps  
+- **Line charts** to visualize coding activity over time  
+- Track **profile stats**: problems solved, contests participated, ranks, etc.  
 
-Dockerized backend hosted on AWS EC2
-Compiler microservice running in parallel
-Frontend deployed via Vercel
-SSL via Let's Encrypt with Certbot
-Subdomain routing using NGINX reverse proxy
+###  Deployment & DevOps
 
-Tech Stack
-Frontend: React.js
-Backend: Node.js, Express.js
-Database: MongoDB
-Compiler Service: Docker, AWS EC2
-AI Integration: Gemini
+- Dockerized backend hosted on **AWS EC2**  
+- Isolated compiler service running in parallel  
+- Frontend deployed using **Vercel**  
+- **SSL** enabled via Let’s Encrypt and **Certbot**  
+- Subdomain routing with **NGINX reverse proxy**  
 
-📍 Live Demo
-👉 judgex.space
+---
+
+##  Tech Stack
+
+- **Frontend:** React.js  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB  
+- **Compiler Service:** Docker, AWS EC2  
+- **AI Integration:** Gemini  
+
+---
+
+## 📍 Live Demo
+
+👉 [https://judgex.space](https://judgex.space)
