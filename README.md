@@ -39,7 +39,7 @@
 ###  Deployment & DevOps
 
 - Dockerized backend hosted on **AWS EC2**  
-- Isolated compiler service running in parallel  
+- Dockerized compiler hosted on **AWS EC2**   
 - Frontend deployed using **Vercel**  
 - **SSL** enabled via Let’s Encrypt and **Certbot**  
 - Subdomain routing with **NGINX reverse proxy**  
@@ -50,8 +50,7 @@
 
 - **Frontend:** React.js  
 - **Backend:** Node.js, Express.js  
-- **Database:** MongoDB  
-- **Compiler Service:** Docker, AWS EC2  
+- **Database:** MongoDB   
 - **AI Integration:** Gemini  
 
 ---
