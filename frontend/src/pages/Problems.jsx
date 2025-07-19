@@ -32,7 +32,6 @@ const Problem = () => {
     <div className="problem-list-container">
       <div className="problem-list-header">
         <h2>Problem List</h2>
-        <input className="problem-search" placeholder="🔍 Search questions" />
       </div>
       <div className="problem-items">
         {problems.map((p, idx) => (

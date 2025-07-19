@@ -61,7 +61,7 @@
 }
 .difficulty.easy   { background: rgba(0, 255,127,0.15); color: #7bcda4; }
 .difficulty.medium { background: rgba(255,215,  0,0.15); color: #e4ac5e; }
-.difficulty.hard   { background: rgba(255, 99, 71,0.15); color: #ff4d4f; }
+.difficulty.difficult   { background: rgba(255, 99, 71,0.15); color: #ff4d4f; }
 
 .section {
   background-color: #262931;

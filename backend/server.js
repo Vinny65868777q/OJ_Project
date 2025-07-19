@@ -25,7 +25,7 @@ const app = express();
 app.use(cors({
    origin: [
     "https://judgex.space",
-    "https://www.judgex.space"
+    "https://www.judgex.space",
   ],
   credentials: true,
   exposedHeaders: [
